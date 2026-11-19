@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Contrato Oficial GTA VI - Gaby & Yasser</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts para estética Vice City / GTA VI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;900&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --vice-pink: #ff2a85;
+      --vice-cyan: #00f0ff;
+      --vice-orange: #ff7b00;
+      --vice-gold: #ffd000;
+      --vice-dark: #090414;
+      --vice-card: rgba(18, 9, 36, 0.88);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--vice-dark);
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 42, 133, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(0, 240, 255, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(255, 123, 0, 0.2) 0%, transparent 50%),
+        linear-gradient(180deg, #0b041a 0%, #16072b 50%, #090312 100%);
+    }
+
+  <!-- Google Fonts para estética Cinematográfica GTA VI / Vice City -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,600;1,700&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --vice-pink: #ff2e93;
+      --vice-cyan: #00e5ff;
+      --vice-orange: #ff7a29;
+      --vice-gold: #ffd447;
+      --vice-dark: #070312;
+      --vice-card: rgba(16, 10, 32, 0.72);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--vice-dark);
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      /* Iluminación atmosférica cinematográfica en alta definición */
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255, 46, 147, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 85% 15%, rgba(0, 229, 255, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(255, 122, 41, 0.22) 0%, transparent 65%),
+        linear-gradient(180deg, #090418 0%, #14082b 48%, #080314 100%);
+    }
+
+    /* Luces Bokeh suaves de ambiente nocturno Vice City */
+    .bokeh-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bokeh-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(55px);
+      opacity: 0.45;
+      animation: driftOrb 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftOrb {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(25px, -30px, 0) scale(1.12); }
+    }
+
+    .font-gta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    .font-editorial {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-vice-script {
+      font-family: 'Pacifico', cursive;
+    }
+
+    /* Resplandores Cinematográficos HD */
+    .neon-text-pink {
+      text-shadow: 0 2px 16px rgba(255, 46, 147, 0.75);
+    }
+
+    .neon-text-cyan {
+      text-shadow: 0 2px 16px rgba(0, 229, 255, 0.75);
+    }
+
+    .neon-text-gold {
+      text-shadow: 0 4px 24px rgba(255, 212, 71, 0.75), 0 2px 8px rgba(255, 122, 41, 0.6);
+    }
+
+    /* Tarjetas Glassmorphism 4K / Retina */
+    .vice-card {
+      background: var(--vice-card);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 
+        0 24px 60px -12px rgba(0, 0, 0, 0.75),
+        0 0 1px 1px rgba(255, 46, 147, 0.18),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+    }
+
+    /* Tarjetas interactivas de las promesas */
+    .clause-card {
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 100%);
+      cursor: pointer;
+    }
+
+    .clause-card:hover {
+      border-color: rgba(0, 229, 255, 0.45);
+      transform: translateY(-2px);
+      background: linear-gradient(145deg, rgba(0, 229, 255, 0.08) 0%, rgba(255, 46, 147, 0.05) 100%);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    .clause-card.checked {
+      border-color: rgba(0, 229, 255, 0.65);
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.14) 0%, rgba(255, 46, 147, 0.12) 100%);
+      box-shadow: 0 8px 28px -4px rgba(0, 229, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .custom-checkbox {
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 46, 147, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      background: rgba(7, 3, 18, 0.55);
+    }
+
+    .clause-card.checked .custom-checkbox {
+      background: linear-gradient(135deg, #00e5ff, #ff2e93);
+      border-color: transparent;
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.7);
+    }
+
+    /* Canvas de Firma Ultra Nítido */
+    .signature-pad-wrapper {
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, rgba(26, 15, 48, 0.85) 0%, rgba(9, 5, 20, 0.95) 100%);
+      border: 1.5px dashed rgba(255, 46, 147, 0.5);
+      border-radius: 16px;
+      overflow: hidden;
+      touch-action: none;
+      transition: all 0.25s ease;
+    }
+
+    .signature-pad-wrapper.active-sign {
+      border-style: solid;
+      border-color: rgba(0, 229, 255, 0.75);
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.22);
+    }
+
+    canvas.sig-canvas {
+      display: block;
+      width: 100%;
+      height: 155px;
+      cursor: crosshair;
+    }
+
+    /* Botón Principal Estilo GTA VI */
+    .btn-gta-primary {
+      background: linear-gradient(110deg, #ff2e93 0%, #ff7a29 50%, #ff2e93 100%);
+      background-size: 200% auto;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px -5px rgba(255, 46, 147, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-gta-primary:hover:not(:disabled) {
+      background-position: right center;
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 14px 38px -4px rgba(0, 229, 255, 0.6), 0 0 25px rgba(255, 46, 147, 0.5);
+    }
+
+    .btn-gta-primary:active:not(:disabled) {
+      transform: scale(0.985);
+    }
+
+    .btn-gta-primary.btn-locked {
+      opacity: 0.72;
+      filter: saturate(0.65);
+    }
+
+    /* Animaciones suaves */
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .logo-float {
+      animation: floatLogo 5s ease-in-out infinite;
+    }
+
+    /* Toast Notification personalizado */
+    #toast-box {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-pink-500 selection:text-white">
+
+  <!-- Luces Bokeh ambientales de alta definición -->
+  <div class="bokeh-layer">
+    <div class="bokeh-orb w-80 h-80 bg-pink-600/40 -top-16 -left-16"></div>
+    <div class="bokeh-orb w-96 h-96 bg-cyan-500/30 top-1/4 -right-24" style="animation-delay: -5s;"></div>
+    <div class="bokeh-orb w-80 h-80 bg-orange-500/30 bottom-10 left-1/4" style="animation-delay: -10s;"></div>
+  </div>
+
+  <!-- Notificación flotante personalizada -->
+  <div id="toast-box" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-6 w-[92%] max-w-md">
+    <div class="bg-[#130826]/95 backdrop-blur-xl border border-[#ff2e93]/70 text-white px-5 py-3.5 rounded-2xl shadow-[0_12px_35px_rgba(255,46,147,0.5)] flex items-center gap-3">
+      <span id="toast-icon" class="text-2xl">⚠️</span>
+      <p id="toast-message" class="text-sm font-semibold leading-snug"></p>
+    </div>
+  </div>
+
+  <!-- Contenedor Principal -->
+  <main class="relative z-10 max-w-3xl mx-auto px-4 py-6 sm:py-10">
+
+    <!-- ENCABEZADO CINEMATOGRÁFICO HD CON LOGO OFICIAL DE GRAND THEFT AUTO VI -->
+    <header class="relative rounded-3xl overflow-hidden vice-card mb-8 border border-white/20">
+      <!-- Escenario Fotorealista Atardecer Vice City + Logo Oficial -->
+      <div class="relative w-full pt-14 pb-8 px-5 sm:px-10 overflow-hidden flex flex-col items-center justify-center text-center"
+           style="background: radial-gradient(circle at 50% 35%, rgba(255, 138, 61, 0.55) 0%, rgba(255, 46, 147, 0.42) 38%, rgba(44, 14, 89, 0.85) 75%, rgba(13, 7, 28, 0.98) 100%);">
+        
+        <!-- Resplandor solar realista difuminado (sin líneas retro) -->
+        <div class="absolute top-6 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full pointer-events-none"
+             style="background: radial-gradient(circle, rgba(255, 224, 130, 0.65) 0%, rgba(255, 115, 55, 0.35) 45%, transparent 72%); filter: blur(18px);">
+        </div>
+
+        <!-- Siluetas Vectoriales Suaves de Palmeras en Alta Definición (izquierda y derecha) -->
+        <svg class="absolute bottom-0 left-0 w-36 sm:w-52 h-auto opacity-80 pointer-events-none text-[#090314]" viewBox="0 0 220 260" fill="currentColor">
+          <path d="M18,260 C32,185 52,125 78,75 L84,78 C62,130 45,188 34,260 Z"/>
+          <path d="M79,76 C45,58 12,72 -8,95 C18,82 48,74 77,81 Z"/>
+          <path d="M80,75 C54,42 20,38 -5,52 C24,48 54,54 78,79 Z"/>
+          <path d="M82,75 C94,38 128,36 154,50 C124,46 98,54 83,79 Z"/>
+          <path d="M83,77 C116,62 148,76 166,100 C140,86 112,76 81,82 Z"/>
+          <path d="M80,79 C66,102 52,126 42,150 C58,128 70,104 82,82 Z"/>
+        </svg>
+
+        <svg class="absolute bottom-0 right-0 w-36 sm:w-52 h-auto opacity-80 pointer-events-none text-[#090314] transform scale-x-[-1]" viewBox="0 0 220 260" fill="currentColor">
+          <path d="M18,260 C32,185 52,125 78,75 L84,78 C62,130 45,188 34,260 Z"/>
+          <path d="M79,76 C45,58 12,72 -8,95 C18,82 48,74 77,81 Z"/>
+          <path d="M80,75 C54,42 20,38 -5,52 C24,48 54,54 78,79 Z"/>
+          <path d="M82,75 C94,38 128,36 154,50 C124,46 98,54 83,79 Z"/>
+          <path d="M83,77 C116,62 148,76 166,100 C140,86 112,76 81,82 Z"/>
+          <path d="M80,79 C66,102 52,126 42,150 C58,128 70,104 82,82 Z"/>
+        </svg>
+
+        <!-- Barra Superior de Etiquetas Glass -->
+        <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-20">
+        </div>
+
+        <!-- LOGO OFICIAL EN ALTA RESOLUCIÓN DE GRAND THEFT AUTO VI -->
+        <div class="relative z-10 w-64 sm:w-80 md:w-96 my-1 logo-float flex items-center justify-center">
+          <img 
+            id="official-gta-logo"
+            src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Grand_Theft_Auto_VI_logo_%28with_gradient%29.svg/960px-Grand_Theft_Auto_VI_logo_%28with_gradient%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" 
+            alt="Grand Theft Auto VI Official Logo" 
+            class="w-full h-auto object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] select-none"
+            onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
+          />
+          <!-- Respaldo tipográfico HD solo si no hubiera conexión a internet -->
+          <h1 id="logo-fallback" class="hidden font-gta-title text-5xl sm:text-7xl text-white tracking-wider leading-none drop-shadow-[0_6px_18px_rgba(0,0,0,0.9)]">
+            GRAND THEFT AUTO <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-pink-400 to-amber-300">VI</span>
+          </h1>
+        </div>
+
+        <!-- Degradado suave hacia el cuerpo de la tarjeta -->
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#100a20] to-transparent pointer-events-none"></div>
+      </div>
+
+      <!-- Subtítulo y Declaración Inicial -->
+      <div class="relative z-10 px-5 sm:px-9 pb-8 pt-2 text-center bg-gradient-to-b from-[#100a20]/90 to-transparent">
+        <p class="font-editorial italic text-xl sm:text-2xl text-pink-300 neon-text-pink mb-5">
+          Se autoriza el vicio, pero no el olvido de la novia.
+        </p>
+
+        <div class="bg-white/[0.04] backdrop-blur-md border border-white/15 rounded-2xl p-5 sm:p-6 text-left sm:text-center space-y-3.5 shadow-inner">
+          <p class="text-sm sm:text-base text-gray-200 leading-relaxed">
+            Este contrato se celebra entre <strong class="text-pink-400 font-bold">Gaby</strong> <span class="text-pink-200/90 text-xs sm:text-sm font-medium">(La Novia)</span> y <strong class="text-cyan-300 font-bold">Yasser</strong> <span class="text-cyan-200/90 text-xs sm:text-sm font-medium">(El Jugador)</span>.
+          </p>
+          <p class="text-sm sm:text-base text-white font-medium leading-relaxed border-t border-white/10 pt-3.5">
+            Yo, <span class="text-cyan-300 font-bold underline decoration-pink-500 decoration-2 underline-offset-4">Yasser</span>, acepto cumplir las siguientes promesas a cambio de recibir acceso a <strong class="text-amber-300 font-extrabold">GRAND THEFT AUTO VI</strong>, otorgado con todo el amor por parte de <strong class="text-pink-400 font-extrabold">Gaby</strong>.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECCIÓN 1: LAS PROMESAS DEL JUGADOR -->
+    <section class="vice-card rounded-3xl p-5 sm:p-8 mb-7">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-pink-500/30">
+        <div>
+          <h2 class="font-gta-title text-2xl sm:text-3xl text-white tracking-wider flex items-center gap-2">
+            <span>❤️</span> LAS PROMESAS DEL JUGADOR
+          </h2>
+        </div>
+        <button type="button" id="btn-check-all" class="self-start sm:self-center text-xs font-bold uppercase tracking-wider px-3.5 py-2 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 transition">
+          ✓ Aceptar todas
+        </button>
+      </div>
+
+      <!-- Barra de progreso de promesas -->
+      <div class="mb-5">
+        <div class="flex justify-between text-xs font-bold mb-1.5">
+          <span class="text-pink-300">NIVEL DE COMPROMISO</span>
+          <span id="progress-text" class="text-cyan-300">0 / 6 Promesas aceptadas</span>
+        </div>
+        <div class="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-white/10">
+          <div id="progress-bar" class="h-full w-0 bg-gradient-to-r from-pink-500 via-amber-400 to-cyan-400 transition-all duration-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Lista de las 6 Cláusulas Exactas -->
+      <div id="clauses-container" class="space-y-3.5">
+        <!-- Cláusula 1 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="1" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-cyan-300 mb-1">1. Atención obligatoria.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              Revisaré cómo está mi novia al menos una vez cada pocas horas, incluso si estoy en medio de una misión importante.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cláusula 2 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="2" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-pink-400 mb-1">2. Pausa por amor.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              Pausaré el juego siempre que Gaby quiera hablar conmigo. Ninguna misión es más importante que escucharla.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cláusula 3 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="3" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-amber-300 mb-1">3. Equilibrio gamer.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              No dedicaré más del 50% de mi tiempo libre a jugar. También habrá tiempo para mi novia, mis responsabilidades y nuestra relación.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cláusula 4 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="4" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-cyan-300 mb-1">4. Amor sin personajes secundarios.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              Recordaré que Lucía es solamente un personaje del videojuego y que mi verdadera novia, mi prioridad y mi persona favorita es Gaby.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cláusula 5 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="5" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-pink-400 mb-1">5. Cláusula de cariño.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              No negaré abrazos, besos, apapachos ni muestras de cariño por estar jugando. ¡El amor no se puede pausar!
+            </p>
+          </div>
+        </div>
+
+        <!-- Cláusula 6 -->
+        <div class="clause-card rounded-2xl p-4 flex items-start gap-3.5" data-clause="6" onclick="toggleClause(this)">
+          <div class="custom-checkbox mt-0.5">
+            <svg class="w-4 h-4 text-white opacity-0 transition-opacity check-icon" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-base sm:text-lg text-amber-300 mb-1">6. Prohibido olvidar.</h3>
+            <p class="text-sm text-gray-200 leading-relaxed">
+              Recordaré que detrás de este permiso hay una novia que me ama, me apoya y quiere verme feliz disfrutando de mi videojuego favorito.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: FIRMAS DE CONFORMIDAD -->
+    <section class="vice-card rounded-3xl p-5 sm:p-8 mb-8">
+      <div class="mb-5 pb-3 border-b border-cyan-500/30">
+        <h2 class="font-gta-title text-2xl sm:text-3xl text-white tracking-wider flex items-center gap-2">
+          <span>✍️</span> FIRMAS DE CONFORMIDAD
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-300">Dibuja tu firma con el dedo o el mouse en el recuadro correspondiente</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- BLOQUE FIRMA YASSER -->
+        <div class="bg-black/35 rounded-2xl p-4 border border-cyan-400/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-gta-title text-2xl text-cyan-300 tracking-wide">YASSER</span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+                El Jugador
+              </span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">Firma aquí aceptando tus promesas:</p>
+
+            <!-- Recuadro Canvas Firma Yasser -->
+            <div id="wrapper-yasser" class="signature-pad-wrapper mb-2">
+              <canvas id="canvas-yasser" class="sig-canvas"></canvas>
+              <span id="placeholder-yasser" class="pointer-events-none absolute inset-0 flex items-center justify-center text-xs text-white/30 font-medium select-none">
+                ✍️ Dibuja la firma de Yasser aquí
+              </span>
+            </div>
+
+            <div class="flex justify-end mb-3">
+              <button type="button" onclick="clearSignature('yasser')" class="text-xs text-gray-300 hover:text-pink-400 font-semibold px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                🗑️ Limpiar firma
+              </button>
+            </div>
+          </div>
+
+          <!-- Fecha Yasser -->
+          <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+            <label for="date-yasser" class="text-xs font-bold text-gray-300 uppercase">Fecha:</label>
+            <input id="date-yasser" type="text" value="18 / 11 / 2026" class="bg-black/50 border border-cyan-500/40 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-bold text-cyan-200 text-right w-36 focus:outline-none focus:border-cyan-300" />
+          </div>
+        </div>
+
+        <!-- BLOQUE FIRMA GABY -->
+        <div class="bg-black/35 rounded-2xl p-4 border border-pink-400/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1 gap-1">
+              <span class="font-gta-title text-2xl text-pink-400 tracking-wide">GABY</span>
+              <span class="text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-400/30 text-right">
+                La Novia Oficial
+              </span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">Autorización oficial de la novia:</p>
+
+            <!-- Recuadro Canvas Firma Gaby -->
+            <div id="wrapper-gaby" class="signature-pad-wrapper mb-2">
+              <canvas id="canvas-gaby" class="sig-canvas"></canvas>
+              <span id="placeholder-gaby" class="pointer-events-none absolute inset-0 flex items-center justify-center text-xs text-white/30 font-medium select-none">
+                ✍️ Firma de Gaby aquí
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <button type="button" onclick="autoSignGaby()" class="text-xs text-pink-200 hover:text-white font-bold px-3 py-1.5 rounded-xl bg-pink-500/25 hover:bg-pink-500/45 border border-pink-400/40 transition shadow-sm">
+                ✨ Estampar firma caligráfica de Gaby
+              </button>
+              <button type="button" onclick="clearSignature('gaby')" class="text-xs text-gray-300 hover:text-pink-400 font-semibold px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 transition">
+                🗑️ Limpiar
+              </button>
+            </div>
+          </div>
+
+          <!-- Fecha Gaby -->
+          <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+            <label for="date-gaby" class="text-xs font-bold text-gray-300 uppercase">Fecha:</label>
+            <input id="date-gaby" type="text" value="18 / 11 / 2026" class="bg-black/50 border border-pink-500/40 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-bold text-pink-200 text-right w-36 focus:outline-none focus:border-pink-300" />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Botón de Envío / Aceptación Final -->
+      <div class="mt-8 text-center">
+        <button type="button" id="btn-submit-contract" onclick="validateAndComplete()" class="btn-gta-primary btn-locked w-full sm:w-auto px-9 py-4 rounded-2xl font-gta-title text-2xl sm:text-3xl text-white tracking-wider uppercase cursor-pointer">
+          🎮 ACEPTAR Y FIRMAR CONTRATO
+        </button>
+        <p id="submit-helper-text" class="text-xs text-cyan-200/80 mt-3 font-medium">
+          “Se autoriza el vicio, pero no el olvido de la novia.”
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL / PANTALLA DE CELEBRACIÓN: MISIÓN CUMPLIDA (MISSION PASSED!) -->
+  <div id="mission-passed-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-xl overflow-y-auto">
+    <!-- Canvas de Confeti Neón -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <div class="relative z-10 w-full max-w-xl rounded-3xl vice-card border border-amber-300/60 p-6 sm:p-9 text-center shadow-[0_25px_70px_rgba(255,212,71,0.28)] my-auto">
+      
+      <!-- Banner Estilo GTA Mission Passed -->
+      <div class="mb-4">
+        <span class="inline-block px-4 py-1 rounded-full bg-amber-400/20 border border-amber-300/50 text-amber-300 text-xs font-extrabold tracking-[0.22em] uppercase mb-2">
+          ★ MISSION PASSED! ★
+        </span>
+        <h2 class="font-gta-title text-4xl sm:text-6xl text-amber-300 neon-text-gold tracking-wider leading-none">
+          🏆 ¡ENHORABUENA, YASSER!
+        </h2>
+        <p class="text-xs sm:text-sm font-bold text-cyan-300 tracking-widest uppercase mt-1.5">
+          ACCESO DESBLOQUEADO
+        </p>
+      </div>
+
+      <!-- Mensaje Exacto de Enhorabuena -->
+      <div class="bg-white/[0.05] border border-pink-400/35 rounded-2xl p-5 sm:p-6 my-5 space-y-3.5 text-sm sm:text-base leading-relaxed backdrop-blur-md">
+        <p class="font-bold text-white text-base sm:text-lg">
+          Se te ha concedido oficialmente el acceso a <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-pink-400 to-amber-300 font-extrabold">GRAND THEFT AUTO VI</span>.
+        </p>
+        <p class="text-gray-200">
+          Disfruta Vice City, completa tus misiones, consigue todos los autos que quieras y vive grandes aventuras.
+        </p>
+      </div>
+
+      <!-- Botones de Acción Post-Firma -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" onclick="downloadSignedCertificate()" class="btn-gta-primary px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base text-white flex items-center justify-center gap-2 shadow-lg">
+          <span>📸</span> Descargar Comprobante HD
+        </button>
+        <button type="button" onclick="closeModal()" class="px-5 py-3.5 rounded-2xl font-bold text-sm bg-white/10 hover:bg-white/20 text-gray-200 border border-white/20 transition">
+          Ver Contrato Firmado
+        </button>
+      </div>
+      <p class="text-[11px] text-cyan-200/85 mt-3.5">
+        💡 Tip: Descarga el comprobante en alta definición y mándaselo a Gaby por WhatsApp como prueba oficial.
+      </p>
+    </div>
+  </div>
+
+  <!-- Canvas oculto en resolución 2X Retina (2160 x 2960) para cero pixelado -->
+  <canvas id="export-canvas" width="2160" height="2960" class="hidden"></canvas>
+
+  <script>
+    // ==========================================
+    // 1. LÓGICA DE LAS PROMESAS (CHECKBOXES)
+    // ==========================================
+    const totalClauses = 6;
+
+    function toggleClause(cardElement) {
+      cardElement.classList.toggle('checked');
+      const icon = cardElement.querySelector('.check-icon');
+      if (cardElement.classList.contains('checked')) {
+        icon.classList.remove('opacity-0');
+        icon.classList.add('opacity-100');
+      } else {
+        icon.classList.add('opacity-0');
+        icon.classList.remove('opacity-100');
+      }
+      updateProgress();
+      updateSubmitButtonState();
+    }
+
+    function updateProgress() {
+      const checkedCount = document.querySelectorAll('.clause-card.checked').length;
+      const percentage = (checkedCount / totalClauses) * 100;
+      document.getElementById('progress-bar').style.width = `${percentage}%`;
+      document.getElementById('progress-text').textContent = `${checkedCount} / ${totalClauses} Promesas aceptadas`;
+    }
+
+    document.getElementById('btn-check-all').addEventListener('click', () => {
+      const cards = document.querySelectorAll('.clause-card');
+      const allChecked = document.querySelectorAll('.clause-card.checked').length === totalClauses;
+      cards.forEach(card => {
+        const icon = card.querySelector('.check-icon');
+        if (allChecked) {
+          card.classList.remove('checked');
+          icon.classList.add('opacity-0');
+          icon.classList.remove('opacity-100');
+        } else {
+          card.classList.add('checked');
+          icon.classList.remove('opacity-0');
+          icon.classList.add('opacity-100');
+        }
+      });
+      updateProgress();
+      updateSubmitButtonState();
+    });
+
+    // ==========================================
+    // 2. SISTEMA DE FIRMAS TÁCTILES Y CON MOUSE (ULTRA HD / RETINA)
+    // ==========================================
+    const signatures = {
+      yasser: { canvas: null, ctx: null, isDrawing: false, hasSigned: false, lastX: 0, lastY: 0, color: '#00e5ff' },
+      gaby:   { canvas: null, ctx: null, isDrawing: false, hasSigned: false, lastX: 0, lastY: 0, color: '#ff2e93' }
+    };
+
+    function updateSubmitButtonState() {
+      const checkedCount = document.querySelectorAll('.clause-card.checked').length;
+      const btn = document.getElementById('btn-submit-contract');
+      const helper = document.getElementById('submit-helper-text');
+
+      if (checkedCount === totalClauses && signatures.yasser.hasSigned) {
+        btn.classList.remove('btn-locked');
+        helper.textContent = '¡Todo listo! Pulsa el botón para sellar oficialmente tu acceso a Vice City. 🔥';
+      } else {
+        btn.classList.add('btn-locked');
+        helper.textContent = '“Se autoriza el vicio, pero no el olvido de la novia.”';
+      }
+    }
+
+    function initSignaturePad(who) {
+      const sig = signatures[who];
+      const canvas = document.getElementById(`canvas-${who}`);
+      const wrapper = document.getElementById(`wrapper-${who}`);
+      sig.canvas = canvas;
+      sig.ctx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        if (sig.hasSigned && canvas.width > 0 && canvas.height > 0) {
+          tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+        }
+
+        const rect = wrapper.getBoundingClientRect();
+        // Multiplicador mínimo de 3x para trazos vectorialmente suaves sin ningún pixelado
+        const dpr = Math.max(window.devicePixelRatio || 1, 3);
+        canvas.width = rect.width * dpr;
+        canvas.height = 155 * dpr;
+        sig.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        sig.ctx.scale(dpr, dpr);
+
+        sig.ctx.lineCap = 'round';
+        sig.ctx.lineJoin = 'round';
+        sig.ctx.lineWidth = 3.2;
+        sig.ctx.strokeStyle = sig.color;
+        sig.ctx.shadowColor = sig.color;
+        sig.ctx.shadowBlur = 8;
+
+        if (sig.hasSigned && tempCanvas.width > 0) {
+          sig.ctx.drawImage(tempCanvas, 0, 0, rect.width, 155);
+        }
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      function getCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        if (e.touches && e.touches.length > 0) {
+          return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+          };
+        }
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        sig.isDrawing = true;
+        const pos = getCoords(e);
+        sig.lastX = pos.x;
+        sig.lastY = pos.y;
+        // Dibujar punto inicial suave
+        sig.ctx.beginPath();
+        sig.ctx.arc(pos.x, pos.y, 1.4, 0, Math.PI * 2);
+        sig.ctx.fillStyle = sig.color;
+        sig.ctx.fill();
+        markAsSigned(who);
+      }
+
+      function draw(e) {
+        if (!sig.isDrawing) return;
+        e.preventDefault();
+        const pos = getCoords(e);
+        sig.ctx.beginPath();
+        sig.ctx.moveTo(sig.lastX, sig.lastY);
+        // Curva cuadrática suave para trazo caligráfico continuo
+        const midX = (sig.lastX + pos.x) / 2;
+        const midY = (sig.lastY + pos.y) / 2;
+        sig.ctx.quadraticCurveTo(sig.lastX, sig.lastY, midX, midY);
+        sig.ctx.lineTo(pos.x, pos.y);
+        sig.ctx.stroke();
+        sig.lastX = pos.x;
+        sig.lastY = pos.y;
+      }
+
+      function stopDraw() {
+        sig.isDrawing = false;
+      }
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      window.addEventListener('mouseup', stopDraw);
+
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDraw);
+    }
+
+    function markAsSigned(who) {
+      signatures[who].hasSigned = true;
+      document.getElementById(`placeholder-${who}`).style.display = 'none';
+      document.getElementById(`wrapper-${who}`).classList.add('active-sign');
+      updateSubmitButtonState();
+    }
+
+    function clearSignature(who) {
+      const sig = signatures[who];
+      const rect = sig.canvas.getBoundingClientRect();
+      sig.ctx.clearRect(0, 0, rect.width + 100, 250);
+      sig.hasSigned = false;
+      document.getElementById(`placeholder-${who}`).style.display = 'flex';
+      document.getElementById(`wrapper-${who}`).classList.remove('active-sign');
+      updateSubmitButtonState();
+    }
+
+    // Firma caligráfica elegante de Gaby en alta resolución
+    function autoSignGaby() {
+      clearSignature('gaby');
+      const sig = signatures.gaby;
+      const rect = sig.canvas.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = 85;
+
+      sig.ctx.save();
+      sig.ctx.font = "italic 46px 'Pacifico', cursive";
+      sig.ctx.fillStyle = "#ff2e93";
+      sig.ctx.shadowColor = "#ff2e93";
+      sig.ctx.shadowBlur = 12;
+      sig.ctx.textAlign = "center";
+      sig.ctx.fillText("Gaby ♥", centerX, centerY);
+
+      sig.ctx.beginPath();
+      sig.ctx.strokeStyle = "#00e5ff";
+      sig.ctx.shadowColor = "#00e5ff";
+      sig.ctx.lineWidth = 2.4;
+      sig.ctx.moveTo(centerX - 80, centerY + 18);
+      sig.ctx.quadraticCurveTo(centerX, centerY + 6, centerX + 85, centerY + 20);
+      sig.ctx.stroke();
+      sig.ctx.restore();
+
+      markAsSigned('gaby');
+      showToast('💖', '¡Firma caligráfica oficial de Gaby estampada!');
+    }
+
+    // ==========================================
+    // 3. NOTIFICACIONES Y VALIDACIÓN
+    // ==========================================
+    let toastTimeout;
+    function showToast(icon, message) {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-icon').textContent = icon;
+      document.getElementById('toast-message').textContent = message;
+      box.classList.remove('opacity-0', '-translate-y-6');
+      box.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add('opacity-0', '-translate-y-6');
+        box.classList.remove('opacity-100', 'translate-y-0');
+      }, 3600);
+    }
+
+    function validateAndComplete() {
+      const checkedCount = document.querySelectorAll('.clause-card.checked').length;
+
+      if (checkedCount < totalClauses) {
+        showToast('🎮', `¡Espera, Yasser! Debes aceptar las ${totalClauses} promesas antes de firmar (${checkedCount}/${totalClauses}).`);
+        document.getElementById('clauses-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      if (!signatures.yasser.hasSigned) {
+        showToast('✍️', '¡Falta la firma de Yasser! Dibuja tu firma en tu recuadro para aceptar el contrato.');
+        document.getElementById('wrapper-yasser').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      if (!signatures.gaby.hasSigned) {
+        // Si Gaby aún no ha firmado, le sugerimos firmarlo o estampar su firma
+        showToast('💕', '¡Falta la firma de Gaby! Pídele que firme o pulsa "Estampar firma de Gaby".');
+        document.getElementById('wrapper-gaby').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ¡Todo listo! Mostrar celebración GTA VI
+      const modal = document.getElementById('mission-passed-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      launchConfetti();
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('mission-passed-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // ==========================================
+    // 4. CONFETI NEÓN VICE CITY
+    // ==========================================
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#ff2a85', '#00f0ff', '#ffd000', '#ff7b00', '#ffffff'];
+      const particles = [];
+
+      for (let i = 0; i < 110; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          w: Math.random() * 10 + 5,
+          h: Math.random() * 6 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedY: Math.random() * 3.5 + 2,
+          speedX: (Math.random() - 0.5) * 2.5,
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 8
+        });
+      }
+
+      let frame = 0;
+      function animateConfetti() {
+        if (frame > 260) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          return;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.y += p.speedY;
+          p.x += p.speedX;
+          p.rotation += p.rotSpeed;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        frame++;
+        requestAnimationFrame(animateConfetti);
+      }
+      animateConfetti();
+    }
+
+    // ==========================================
+    // 5. GENERADOR DE COMPROBANTE DESCARGABLE (PNG)
+    // ==========================================
+    // 5. GENERADOR DE COMPROBANTE DESCARGABLE ULTRA HD (2160 x 2960)
+    // ==========================================
+    function downloadSignedCertificate() {
+      const exp = document.getElementById('export-canvas');
+      const ctx = exp.getContext('2d');
+      // Escalamos 2x sobre base 1080x1480 para lograr nitidez 4K sin pixelado
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(2, 2);
+
+      const W = 1080;
+      const H = 1480;
+
+      // Fondo Vice City Atardecer Profundo
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+      bgGrad.addColorStop(0, '#090318');
+      bgGrad.addColorStop(0.45, '#190833');
+      bgGrad.addColorStop(1, '#070212');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Luces ambientales suaves (Bokeh en exportación)
+      const orb1 = ctx.createRadialGradient(220, 220, 10, 220, 220, 320);
+      orb1.addColorStop(0, 'rgba(255, 46, 147, 0.28)');
+      orb1.addColorStop(1, 'transparent');
+      ctx.fillStyle = orb1;
+      ctx.fillRect(0, 0, W, H);
+
+      const orb2 = ctx.createRadialGradient(860, 320, 10, 860, 320, 340);
+      orb2.addColorStop(0, 'rgba(0, 229, 255, 0.22)');
+      orb2.addColorStop(1, 'transparent');
+      ctx.fillStyle = orb2;
+      ctx.fillRect(0, 0, W, H);
+
+      // Marco Neón Exterior
+      ctx.strokeStyle = '#ff2e93';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(32, 32, W - 64, H - 64);
+
+      ctx.strokeStyle = '#00e5ff';
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(48, 48, W - 96, H - 96);
+
+      // Resplandor Solar Suave Superior
+      const sunGrad = ctx.createRadialGradient(W / 2, 200, 15, W / 2, 200, 165);
+      sunGrad.addColorStop(0, 'rgba(255, 224, 130, 0.85)');
+      sunGrad.addColorStop(0.55, 'rgba(255, 115, 55, 0.45)');
+      sunGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = sunGrad;
+      ctx.beginPath();
+      ctx.arc(W / 2, 200, 165, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Emblema VI elegante en el encabezado
+      ctx.save();
+      const viTextGrad = ctx.createLinearGradient(W / 2 - 120, 90, W / 2 + 120, 280);
+      viTextGrad.addColorStop(0, '#00e5ff');
+      viTextGrad.addColorStop(0.5, '#ff2e93');
+      viTextGrad.addColorStop(1, '#ffd447');
+      ctx.fillStyle = viTextGrad;
+      ctx.font = "900 215px 'Bebas Neue', sans-serif";
+      ctx.textAlign = 'center';
+      ctx.globalAlpha = 0.35;
+      ctx.fillText('VI', W / 2, 275);
+      ctx.restore();
+
+      // Encabezado
+      ctx.fillStyle = '#00e5ff';
+      ctx.font = "bold 25px 'Montserrat', sans-serif";
+      ctx.textAlign = 'center';
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = "900 76px 'Bebas Neue', sans-serif";
+      ctx.fillText('GRAND THEFT AUTO VI', W / 2, 198);
+
+      ctx.fillStyle = '#ff85c0';
+      ctx.font = "italic 30px 'Playfair Display', serif";
+      ctx.fillText('“Se autoriza el vicio, pero no el olvido de la novia.”', W / 2, 252);
+
+      // Caja Glassmorphism Principal
+      ctx.fillStyle = 'rgba(14, 7, 30, 0.82)';
+      ctx.fillRect(80, 315, W - 160, 625);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(80, 315, W - 160, 625);
+
+      // Texto Introductorio
+      ctx.fillStyle = '#e5e7eb';
+      ctx.font = "600 23px 'Montserrat', sans-serif";
+      ctx.fillText('Celebrado entre Gaby (La Novia) y Yasser (El Jugador)', W / 2, 368);
+
+      ctx.fillStyle = '#ffd447';
+      ctx.font = "bold 26px 'Montserrat', sans-serif";
+      ctx.fillText('❤️ LAS 6 PROMESAS ACEPTADAS POR YASSER:', W / 2, 428);
+
+      const promises = [
+        '1. Atención obligatoria: Revisar cómo está mi novia cada pocas horas.',
+        '2. Pausa por amor: Pausar el juego siempre que Gaby quiera hablar.',
+        '3. Equilibrio gamer: Máximo 50% de tiempo libre jugando.',
+        '4. Amor sin personajes secundarios: Gaby es mi prioridad y persona favorita.',
+        '5. Cláusula de cariño: Cero excusas para abrazos, besos y apapachos.',
+        '6. Prohibido olvidar: Valorar siempre a la novia que me ama y me apoya.'
+      ];
+
+      ctx.textAlign = 'left';
+      ctx.font = "600 22px 'Montserrat', sans-serif";
+      promises.forEach((line, idx) => {
+        ctx.fillStyle = idx % 2 === 0 ? '#7aefff' : '#ffb8dc';
+        ctx.fillText('✓ ' + line, 115, 495 + idx * 54);
+      });
+
+      // Sello de Misión Cumplida
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffd447';
+      ctx.font = "900 40px 'Bebas Neue', sans-serif";
+      ctx.fillText('🏆 MISSION PASSED! ACCESO CONCEDIDO A VICE CITY', W / 2, 875);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = "italic 22px 'Montserrat', sans-serif";
+
+      // Recuadros de Firmas Reales en Alta Definición
+      const dateYasser = document.getElementById('date-yasser').value || '18 / 11 / 2026';
+      const dateGaby = document.getElementById('date-gaby').value || '18 / 11 / 2026';
+
+      // Caja Firma Yasser
+      ctx.fillStyle = 'rgba(0, 229, 255, 0.08)';
+      ctx.fillRect(80, 980, 435, 310);
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.65)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(80, 980, 435, 310);
+
+      ctx.drawImage(signatures.yasser.canvas, 95, 995, 405, 165);
+
+      ctx.fillStyle = '#00e5ff';
+      ctx.font = "900 32px 'Bebas Neue', sans-serif";
+      ctx.fillText('YASSER — EL JUGADOR', 297, 1205);
+      ctx.fillStyle = '#d1d5db';
+      ctx.font = "600 20px 'Montserrat', sans-serif";
+      ctx.fillText(`Fecha: ${dateYasser}`, 297, 1245);
+
+      // Caja Firma Gaby
+      ctx.fillStyle = 'rgba(255, 46, 147, 0.08)';
+      ctx.fillRect(565, 980, 435, 310);
+      ctx.strokeStyle = 'rgba(255, 46, 147, 0.65)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(565, 980, 435, 310);
+
+      ctx.drawImage(signatures.gaby.canvas, 580, 995, 405, 165);
+
+      ctx.fillStyle = '#ff2e93';
+      ctx.font = "900 32px 'Bebas Neue', sans-serif";
+      ctx.fillText('GABY — LA NOVIA OFICIAL', 782, 1205);
+      ctx.fillStyle = '#d1d5db';
+      ctx.font = "600 20px 'Montserrat', sans-serif";
+      ctx.fillText(`Fecha: ${dateGaby}`, 782, 1245);
+
+      // Pie de página
+      ctx.fillStyle = '#ffd447';
+      ctx.font = "italic 30px 'Playfair Display', serif";
+
+      // Descargar Imagen Ultra HD
+      try {
+        const link = document.createElement('a');
+        link.download = 'Contrato_Oficial_GTA_VI_Gaby_y_Yasser_HD.png';
+        link.href = exp.toDataURL('image/png', 1.0);
+        link.click();
+        showToast('📸', '¡Comprobante HD descargado! Ya puedes enviárselo a Gaby.');
+      } catch (err) {
+        showToast('💡', 'Toma una captura de pantalla para guardar tu contrato firmado.');
+      }
+    }
+
+    // Inicializar ambos lienzos de firma al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      initSignaturePad('yasser');
+      initSignaturePad('gaby');
+      updateSubmitButtonState();
+    });
+  </script>
+</body>
+</html>
