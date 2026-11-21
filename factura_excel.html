@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Factura_Comercial.xlsx - Excel</title>
+  <!-- Tailwind CSS para utilidades de diseño responsivo y estructura -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fuente Inter para legibilidad limpia estilo interfaz moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y ESTILOS BASE ESTILO MICROSOFT EXCEL
+       ========================================================================== */
+    :root {
+      --excel-green: #107C41;
+      --excel-green-dark: #0B5A2E;
+      --excel-green-light: #E8F5E9;
+      --excel-green-tint: #F1F8F4;
+      --excel-border: #D4D4D4;
+      --excel-header-bg: #F3F3F3;
+      --excel-header-active: #D9EADF;
+      --excel-bg: #E6E6E6;
+      --text-main: #1F2937;
+      --text-muted: #6B7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--excel-bg);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       BARRA DE TÍTULO Y CINTA DE OPCIONES (RIBBON)
+       ========================================================================== */
+    .excel-titlebar {
+      background-color: var(--excel-green);
+      color: #FFFFFF;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      font-size: 13px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .excel-ribbon {
+      background-color: #F8F9FA;
+      border-bottom: 1px solid var(--excel-border);
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      scrollbar-width: none;
+    }
+
+    .excel-ribbon::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ribbon-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 8px;
+      border-right: 1px solid #E0E0E0;
+      flex-shrink: 0;
+    }
+
+    .ribbon-group:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .ribbon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #262626;
+      background-color: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      white-space: nowrap;
+      min-height: 34px;
+    }
+
+    .ribbon-btn:hover {
+      background-color: #EAEAEA;
+      border-color: #D0D0D0;
+    }
+
+    .ribbon-btn:active {
+      background-color: #DCDCDC;
+      transform: translateY(0.5px);
+    }
+
+    .ribbon-btn.primary {
+      background-color: var(--excel-green);
+      color: #FFFFFF;
+      border-color: var(--excel-green-dark);
+    }
+
+    .ribbon-btn.primary:hover {
+      background-color: var(--excel-green-dark);
+    }
+
+    .ribbon-btn.danger:hover {
+      background-color: #FEE2E2;
+      color: #B91C1C;
+      border-color: #FCA5A5;
+    }
+
+    .ribbon-select {
+      padding: 5px 8px;
+      border-radius: 4px;
+      border: 1px solid #CCCCCC;
+      background-color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #262626;
+      min-height: 34px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .ribbon-select:focus {
+      border-color: var(--excel-green);
+    }
+
+    /* ==========================================================================
+       BARRA DE FÓRMULAS
+       ========================================================================== */
+    .formula-bar-container {
+      background-color: #FFFFFF;
+      border-bottom: 1px solid var(--excel-border);
+      display: flex;
+      align-items: center;
+      height: 32px;
+      padding: 0 6px;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .name-box {
+      width: 64px;
+      height: 24px;
+      border: 1px solid #D4D4D4;
+      background-color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      border-radius: 2px;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .fx-symbol {
+      color: #6B7280;
+      font-style: italic;
+      font-family: Georgia, serif;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 0 6px;
+      border-right: 1px solid #E5E7EB;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .formula-input {
+      flex: 1;
+      height: 24px;
+      border: none;
+      outline: none;
+      font-size: 12.5px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #111827;
+      background: transparent;
+      padding: 0 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       ÁREA DE TRABAJO Y CUADRÍCULA DE HOJA DE CÁLCULO
+       ========================================================================== */
+    .sheet-viewport {
+      flex: 1;
+      overflow: auto;
+      background-color: #E2E4E7;
+      position: relative;
+    }
+
+    .excel-grid-table {
+      border-collapse: collapse;
+      background-color: #FFFFFF;
+      table-layout: fixed;
+      width: 100%;
+      min-width: 820px; /* Permite scroll horizontal limpio en celulares */
+      max-width: 1040px;
+      margin: 0 auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Encabezados de Columnas (A, B, C...) */
+    .col-header {
+      background-color: var(--excel-header-bg);
+      border: 1px solid var(--excel-border);
+      color: #4B5563;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      height: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      user-select: none;
+    }
+
+    .col-header.active-col {
+      background-color: var(--excel-header-active);
+      color: var(--excel-green);
+      border-bottom: 2px solid var(--excel-green);
+    }
+
+    .corner-header {
+      width: 38px;
+      background-color: var(--excel-header-bg);
+      border: 1px solid var(--excel-border);
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 30;
+    }
+
+    /* Números de Fila (1, 2, 3...) */
+    .row-header {
+      width: 38px;
+      background-color: var(--excel-header-bg);
+      border: 1px solid var(--excel-border);
+      color: #4B5563;
+      font-size: 11.5px;
+      font-weight: 500;
+      text-align: center;
+      position: sticky;
+      left: 0;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .row-header.active-row {
+      background-color: var(--excel-header-active);
+      color: var(--excel-green);
+      font-weight: 700;
+      border-right: 2px solid var(--excel-green);
+    }
+
+    /* Celdas de la cuadrícula */
+    .excel-cell {
+      border: 1px solid var(--excel-border);
+      padding: 0;
+      height: 30px;
+      position: relative;
+      vertical-align: middle;
+      background-color: #FFFFFF;
+    }
+
+    /* Resaltado de celda seleccionada estilo Excel */
+    .excel-cell.selected-cell {
+      outline: 2px solid var(--excel-green);
+      outline-offset: -2px;
+      z-index: 5;
+    }
+
+    .excel-cell.selected-cell::after {
+      content: '';
+      position: absolute;
+      right: -3px;
+      bottom: -3px;
+      width: 6px;
+      height: 6px;
+      background-color: var(--excel-green);
+      border: 1px solid #FFFFFF;
+      pointer-events: none;
+    }
+
+    /* Inputs dentro de las celdas (Font-size 16px en móvil evita zoom automático en iOS) */
+    .cell-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 4px 8px;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: #111827;
+    }
+
+    @media (max-width: 640px) {
+      .cell-input {
+        font-size: 15px;
+      }
+    }
+
+    .cell-input:focus {
+      background-color: #F9FAFB;
+    }
+
+    .cell-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 6px 8px;
+      font-family: inherit;
+      font-size: 13px;
+      color: #1F2937;
+      resize: vertical;
+      min-height: 64px;
+      line-height: 1.45;
+    }
+
+    /* Estilos específicos de documento factura */
+    .inv-banner {
+      background-color: var(--excel-green);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      padding: 8px 12px;
+    }
+
+    .inv-section-header {
+      background-color: #E8F5E9;
+      color: #0B5A2E;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 5px 8px;
+      border-bottom: 1.5px solid var(--excel-green);
+    }
+
+    .inv-label {
+      background-color: #F9FAFB;
+      color: #4B5563;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+
+    .inv-table-th {
+      background-color: #107C41;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 6px 8px;
+      text-align: left;
+      border: 1px solid #0B5A2E;
+    }
+
+    .calc-cell {
+      background-color: #F8FAFC;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: #0F172A;
+      padding: 4px 8px;
+      text-align: right;
+      user-select: none;
+    }
+
+    .total-highlight {
+      background-color: #E8F5E9 !important;
+      color: #0B5A2E !important;
+      font-weight: 700 !important;
+      font-size: 14.5px !important;
+      border-top: 2px solid var(--excel-green) !important;
+      border-bottom: 2px solid var(--excel-green) !important;
+    }
+
+    .delete-row-btn {
+      opacity: 0.65;
+      color: #DC2626;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .delete-row-btn:hover {
+      opacity: 1;
+      background-color: #FEE2E2;
+    }
+
+    /* ==========================================================================
+       BARRA INFERIOR DE PESTAÑAS Y ESTADO DE EXCEL
+       ========================================================================== */
+    .excel-bottom-bar {
+      background-color: #F3F3F3;
+      border-top: 1px solid var(--excel-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 30px;
+      padding: 0 10px;
+      font-size: 12px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .sheet-tab {
+      background-color: #FFFFFF;
+      color: var(--excel-green);
+      font-weight: 600;
+      padding: 4px 14px;
+      border-left: 1px solid var(--excel-border);
+      border-right: 1px solid var(--excel-border);
+      border-bottom: 2.5px solid var(--excel-green);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       MODAL DE CONFIRMACIÓN PERSONALIZADO (SIN ALERT/CONFIRM NATIVO)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    /* ==========================================================================
+       ESTILOS DE IMPRESIÓN / EXPORTACIÓN A PDF (@media print)
+       Convierte la cuadrícula de Excel en una factura limpia tamaño Carta/A4
+       ========================================================================== */
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 12mm;
+      }
+
+      body {
+        background: #FFFFFF !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+
+      /* Ocultar toda la interfaz de Excel */
+      .excel-titlebar,
+      .excel-ribbon,
+      .formula-bar-container,
+      .excel-bottom-bar,
+      .col-header,
+      .row-header,
+      .corner-header,
+      .no-print,
+      .delete-row-btn {
+        display: none !important;
+      }
+
+      .sheet-viewport {
+        overflow: visible !important;
+        background: #FFFFFF !important;
+        padding: 0 !important;
+      }
+
+      .excel-grid-table {
+        min-width: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+      }
+
+      /* Quitar selección verde activa al imprimir */
+      .excel-cell.selected-cell {
+        outline: none !important;
+      }
+      .excel-cell.selected-cell::after {
+        display: none !important;
+      }
+
+      .excel-cell {
+        border: 1px solid #CBD5E1 !important;
+      }
+
+      /* Asegurar que los colores de encabezado se impriman nítidos */
+      .inv-banner,
+      .inv-table-th,
+      .inv-section-header,
+      .total-highlight {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .cell-input,
+      .cell-textarea {
+        padding: 3px 6px !important;
+        font-size: 12px !important;
+        color: #000000 !important;
+      }
+
+      /* Ocultar fila vacía separadora si no aporta visualmente o hacerla discreta */
+      .spacer-row td {
+        border-left: none !important;
+        border-right: none !important;
+        height: 10px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. BARRA DE TÍTULO VERDE DE EXCEL
+       ======================================================================== -->
+  <header class="excel-titlebar">
+    <div class="flex items-center gap-2.5 overflow-hidden">
+      <!-- Ícono estilo Excel SVG -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="flex-shrink-0">
+        <rect x="2" y="3" width="20" height="18" rx="2.5" fill="#FFFFFF" fill-opacity="0.18" stroke="#FFFFFF" stroke-width="1.5"/>
+        <path d="M8 8L12 12M12 12L16 8M12 12L8 16M12 12L16 16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="font-semibold tracking-tight truncate">Factura_Comercial.xlsx - Excel</span>
+      <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-white/15 text-white/95">
+        Autoguardado local activo
+      </span>
+    </div>
+
+    <div class="flex items-center gap-2 text-xs">
+      <button onclick="window.print()" class="bg-white/15 hover:bg-white/25 text-white px-2.5 py-1 rounded flex items-center gap-1.5 transition cursor-pointer" title="Imprimir o Guardar como PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span class="hidden xs:inline">Exportar PDF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. CINTA DE OPCIONES (RIBBON) CON HERRAMIENTAS DE FACTURACIÓN
+       ======================================================================== -->
+  <nav class="excel-ribbon" aria-label="Barra de herramientas de factura">
+    <!-- Grupo: Filas de Conceptos -->
+    <div class="ribbon-group">
+      <button type="button" onclick="addConceptRow()" class="ribbon-btn" title="Agregar una nueva fila de producto o servicio">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#107C41" stroke-width="2.2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>+ Fila</span>
+      </button>
+
+      <button type="button" onclick="deleteSelectedRow()" class="ribbon-btn danger" title="Eliminar la fila de concepto seleccionada o la última fila">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>- Fila</span>
+      </button>
+    </div>
+
+    <!-- Grupo: Configuración de Impuesto (IVA) y Moneda -->
+    <div class="ribbon-group">
+      <label for="ivaSelector" class="text-xs font-medium text-gray-600 pl-1">IVA:</label>
+      <select id="ivaSelector" onchange="recalculateAll()" class="ribbon-select" title="Seleccionar tasa de IVA">
+        <option value="0.16" selected>16% (General)</option>
+        <option value="0.08">8% (Frontera)</option>
+        <option value="0">0% (Exento)</option>
+      </select>
+
+      <label for="currencySelector" class="text-xs font-medium text-gray-600 pl-1">Moneda:</label>
+      <select id="currencySelector" onchange="recalculateAll()" class="ribbon-select" title="Seleccionar formato de moneda">
+        <option value="MXN" selected>$ MXN</option>
+        <option value="USD">$ USD</option>
+        <option value="EUR">€ EUR</option>
+      </select>
+    </div>
+
+    <!-- Grupo: Acciones de Documento -->
+    <div class="ribbon-group">
+      <button type="button" onclick="openResetModal()" class="ribbon-btn" title="Limpiar campos e iniciar una factura nueva">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <span>Nueva Factura</span>
+      </button>
+
+      <button type="button" onclick="window.print()" class="ribbon-btn primary" title="Imprimir factura o guardar como PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Imprimir / PDF</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       3. BARRA DE FÓRMULAS INTERACTIVA
+       ======================================================================== -->
+  <div class="formula-bar-container">
+    <div id="activeCellRef" class="name-box" title="Referencia de celda activa">A1</div>
+    <div class="fx-symbol" title="Barra de fórmulas">fx</div>
+    <input
+      type="text"
+      id="formulaBarInput"
+      class="formula-input"
+      readonly
+      value="FACTURA COMERCIAL"
+      aria-label="Contenido o fórmula de la celda seleccionada"
+    />
+  </div>
+
+  <!-- ========================================================================
+       4. CUADRÍCULA DE HOJA DE CÁLCULO (EL LIENZO DE LA FACTURA)
+       ======================================================================== -->
+  <main class="sheet-viewport" id="sheetViewport">
+    <table class="excel-grid-table" id="excelTable">
+      <!-- Definición proporcional de ancho de columnas A - F -->
+      <colgroup>
+        <col style="width: 38px;" class="no-print" /> <!-- Columna de números de fila -->
+        <col style="width: 13%;" />  <!-- Col A: Código / Etiquetas -->
+        <col style="width: 33%;" />  <!-- Col B: Descripción / Datos Emisor -->
+        <col style="width: 11%;" />  <!-- Col C: Cantidad -->
+        <col style="width: 11%;" />  <!-- Col D: Unidad / Etiquetas Cliente -->
+        <col style="width: 16%;" />  <!-- Col E: Precio Unitario / Datos Cliente -->
+        <col style="width: 16%;" />  <!-- Col F: Importe -->
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th class="corner-header"></th>
+          <th class="col-header" data-col="A">A</th>
+          <th class="col-header" data-col="B">B</th>
+          <th class="col-header" data-col="C">C</th>
+          <th class="col-header" data-col="D">D</th>
+          <th class="col-header" data-col="E">E</th>
+          <th class="col-header" data-col="F">F</th>
+        </tr>
+      </thead>
+
+      <tbody id="sheetBody">
+        <!-- FILA 1: TÍTULO PRINCIPAL DE LA FACTURA -->
+        <tr data-row="1">
+          <td class="row-header">1</td>
+          <td colspan="4" class="excel-cell inv-banner" data-ref="A1" data-formula="FACTURA COMERCIAL" onclick="selectCell(this)">
+            FACTURA COMERCIAL
+          </td>
+          <td class="excel-cell inv-label text-right" data-ref="E1" data-formula="FOLIO:" onclick="selectCell(this)">
+            FOLIO:
+          </td>
+          <td class="excel-cell bg-emerald-50/40" data-ref="F1" onclick="selectCell(this)">
+            <input type="text" id="invFolio" class="cell-input font-bold text-emerald-900 text-right" value="FAC-001" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 2: SUBTÍTULO Y FECHA -->
+        <tr data-row="2">
+          <td class="row-header">2</td>
+          <td colspan="4" class="excel-cell px-2 text-xs text-gray-500" data-ref="A2" data-formula="Comprobante Fiscal y Comercial" onclick="selectCell(this)">
+            Comprobante Fiscal y Comercial de Venta
+          </td>
+          <td class="excel-cell inv-label text-right" data-ref="E2" data-formula="FECHA:" onclick="selectCell(this)">
+            FECHA:
+          </td>
+          <td class="excel-cell" data-ref="F2" onclick="selectCell(this)">
+            <input type="date" id="invDate" class="cell-input text-right text-xs font-medium" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 3: SEPARADOR -->
+        <tr data-row="3" class="spacer-row">
+          <td class="row-header">3</td>
+          <td colspan="6" class="excel-cell h-3 bg-gray-50/40" data-ref="A3" data-formula="" onclick="selectCell(this)"></td>
+        </tr>
+
+        <!-- FILA 4: ENCABEZADOS DE EMISOR Y CLIENTE -->
+        <tr data-row="4">
+          <td class="row-header">4</td>
+          <td colspan="3" class="excel-cell inv-section-header" data-ref="A4" data-formula="DATOS DEL EMISOR / NEGOCIO" onclick="selectCell(this)">
+            Datos del Emisor / Negocio
+          </td>
+          <td colspan="3" class="excel-cell inv-section-header" data-ref="D4" data-formula="DATOS DEL CLIENTE" onclick="selectCell(this)">
+            Datos del Cliente
+          </td>
+        </tr>
+
+        <!-- FILA 5: RAZÓN SOCIAL -->
+        <tr data-row="5">
+          <td class="row-header">5</td>
+          <td class="excel-cell inv-label" data-ref="A5" data-formula="Negocio:" onclick="selectCell(this)">Negocio:</td>
+          <td colspan="2" class="excel-cell" data-ref="B5" onclick="selectCell(this)">
+            <input type="text" id="emisorNombre" class="cell-input font-semibold" value="Soluciones Tecnológicas del Centro S.A." placeholder="Nombre o Razón Social" oninput="updateFormulaFromInput(this)" />
+          </td>
+          <td class="excel-cell inv-label" data-ref="D5" data-formula="Cliente:" onclick="selectCell(this)">Cliente:</td>
+          <td colspan="2" class="excel-cell" data-ref="E5" onclick="selectCell(this)">
+            <input type="text" id="clienteNombre" class="cell-input font-semibold" value="Comercializadora del Norte S. de R.L." placeholder="Nombre o Razón Social del Cliente" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 6: RFC / ID FISCAL -->
+        <tr data-row="6">
+          <td class="row-header">6</td>
+          <td class="excel-cell inv-label" data-ref="A6" data-formula="RFC / ID:" onclick="selectCell(this)">RFC / ID:</td>
+          <td colspan="2" class="excel-cell" data-ref="B6" onclick="selectCell(this)">
+            <input type="text" id="emisorRfc" class="cell-input uppercase" value="STC2108159A1" placeholder="RFC o Identificación Fiscal" oninput="updateFormulaFromInput(this)" />
+          </td>
+          <td class="excel-cell inv-label" data-ref="D6" data-formula="RFC / ID:" onclick="selectCell(this)">RFC / ID:</td>
+          <td colspan="2" class="excel-cell" data-ref="E6" onclick="selectCell(this)">
+            <input type="text" id="clienteRfc" class="cell-input uppercase" value="CNO190422B84" placeholder="RFC o Identificación Fiscal" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 7: DIRECCIÓN -->
+        <tr data-row="7">
+          <td class="row-header">7</td>
+          <td class="excel-cell inv-label" data-ref="A7" data-formula="Dirección:" onclick="selectCell(this)">Dirección:</td>
+          <td colspan="2" class="excel-cell" data-ref="B7" onclick="selectCell(this)">
+            <input type="text" id="emisorDir" class="cell-input" value="Av. Reforma 450, Col. Juárez, CDMX" placeholder="Calle, número, colonia, ciudad" oninput="updateFormulaFromInput(this)" />
+          </td>
+          <td class="excel-cell inv-label" data-ref="D7" data-formula="Dirección:" onclick="selectCell(this)">Dirección:</td>
+          <td colspan="2" class="excel-cell" data-ref="E7" onclick="selectCell(this)">
+            <input type="text" id="clienteDir" class="cell-input" value="Blvd. Constitución 120, Monterrey, N.L." placeholder="Calle, número, colonia, ciudad" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 8: TELÉFONO / CORREO -->
+        <tr data-row="8">
+          <td class="row-header">8</td>
+          <td class="excel-cell inv-label" data-ref="A8" data-formula="Contacto:" onclick="selectCell(this)">Contacto:</td>
+          <td colspan="2" class="excel-cell" data-ref="B8" onclick="selectCell(this)">
+            <input type="text" id="emisorContact" class="cell-input" value="55-4321-8765 | facturacion@soluciones.mx" placeholder="Teléfono y correo electrónico" oninput="updateFormulaFromInput(this)" />
+          </td>
+          <td class="excel-cell inv-label" data-ref="D8" data-formula="Contacto:" onclick="selectCell(this)">Contacto:</td>
+          <td colspan="2" class="excel-cell" data-ref="E8" onclick="selectCell(this)">
+            <input type="text" id="clienteContact" class="cell-input" value="81-8765-4321 | compras@comnorte.com" placeholder="Teléfono y correo electrónico" oninput="updateFormulaFromInput(this)" />
+          </td>
+        </tr>
+
+        <!-- FILA 9: SEPARADOR -->
+        <tr data-row="9" class="spacer-row">
+          <td class="row-header">9</td>
+          <td colspan="6" class="excel-cell h-3 bg-gray-50/40" data-ref="A9" data-formula="" onclick="selectCell(this)"></td>
+        </tr>
+
+        <!-- FILA 10: ENCABEZADOS DE LA TABLA DE CONCEPTOS -->
+        <tr data-row="10">
+          <td class="row-header">10</td>
+          <th class="inv-table-th" data-ref="A10" data-formula="CÓDIGO / SKU" onclick="selectCell(this)">Código / SKU</th>
+          <th class="inv-table-th" data-ref="B10" data-formula="DESCRIPCIÓN DEL PRODUCTO O SERVICIO" onclick="selectCell(this)">Descripción del Producto o Servicio</th>
+          <th class="inv-table-th text-right" data-ref="C10" data-formula="CANTIDAD" onclick="selectCell(this)">Cantidad</th>
+          <th class="inv-table-th text-center" data-ref="D10" data-formula="UNIDAD" onclick="selectCell(this)">Unidad</th>
+          <th class="inv-table-th text-right" data-ref="E10" data-formula="PRECIO UNITARIO" onclick="selectCell(this)">Precio Unitario</th>
+          <th class="inv-table-th text-right" data-ref="F10" data-formula="IMPORTE" onclick="selectCell(this)">Importe</th>
+        </tr>
+
+        <!-- LAS FILAS DINÁMICAS DE CONCEPTOS SE INSERTAN AQUÍ (FILAS 11 EN ADELANTE) -->
+      </tbody>
+
+      <!-- SECCIÓN DE TOTALES Y OBSERVACIONES (DINÁMICA SEGÚN NÚMERO DE FILAS) -->
+      <tfoot id="sheetFooter">
+        <!-- Fila de botón rápido para agregar fila (no se imprime) -->
+        <tr class="no-print" id="quickAddRow">
+          <td class="row-header" id="quickAddRowNum">14</td>
+          <td colspan="6" class="excel-cell bg-gray-50/70 px-2 py-1">
+            <button type="button" onclick="addConceptRow()" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 inline-flex items-center gap-1 py-0.5 px-1.5 rounded hover:bg-emerald-50 transition cursor-pointer">
+              <span>+ Agregar concepto o producto</span>
+            </button>
+          </td>
+        </tr>
+
+        <!-- Fila de Subtotal -->
+        <tr id="rowSubtotal">
+          <td class="row-header" id="subRowNum">15</td>
+          <td colspan="4" class="excel-cell bg-gray-50/30" data-ref="A15" data-formula="" onclick="selectCell(this)"></td>
+          <td class="excel-cell inv-label text-right" data-ref="E15" data-formula="SUBTOTAL" onclick="selectCell(this)">SUBTOTAL</td>
+          <td class="excel-cell calc-cell" id="cellSubtotal" data-ref="F15" data-formula="=SUMA(F11:F13)" onclick="selectCell(this)">$0.00</td>
+        </tr>
+
+        <!-- Fila de IVA -->
+        <tr id="rowIva">
+          <td class="row-header" id="ivaRowNum">16</td>
+          <td colspan="4" class="excel-cell bg-gray-50/30" data-ref="A16" data-formula="" onclick="selectCell(this)"></td>
+          <td class="excel-cell inv-label text-right" id="labelIva" data-ref="E16" data-formula="IVA (16%)" onclick="selectCell(this)">IVA (16%)</td>
+          <td class="excel-cell calc-cell" id="cellIva" data-ref="F16" data-formula="=F15*16%" onclick="selectCell(this)">$0.00</td>
+        </tr>
+
+        <!-- Fila de Total -->
+        <tr id="rowTotal">
+          <td class="row-header" id="totalRowNum">17</td>
+          <td colspan="4" class="excel-cell bg-gray-50/30" data-ref="A17" data-formula="" onclick="selectCell(this)"></td>
+          <td class="excel-cell inv-label text-right total-highlight" data-ref="E17" data-formula="TOTAL" onclick="selectCell(this)">TOTAL</td>
+          <td class="excel-cell calc-cell total-highlight" id="cellTotal" data-ref="F17" data-formula="=F15+F16" onclick="selectCell(this)">$0.00</td>
+        </tr>
+
+        <!-- Fila Separadora -->
+        <tr id="rowSpacerNotes" class="spacer-row">
+          <td class="row-header" id="spacerNotesRowNum">18</td>
+          <td colspan="6" class="excel-cell h-3 bg-gray-50/40" data-ref="A18" data-formula="" onclick="selectCell(this)"></td>
+        </tr>
+
+        <!-- Encabezado de Observaciones -->
+        <tr id="rowNotesHeader">
+          <td class="row-header" id="notesHeaderRowNum">19</td>
+          <td colspan="6" class="excel-cell inv-section-header" data-ref="A19" data-formula="OBSERVACIONES Y CONDICIONES DE PAGO" onclick="selectCell(this)">
+            Observaciones / Condiciones de Pago / Datos Bancarios
+          </td>
+        </tr>
+
+        <!-- Área Editable de Observaciones -->
+        <tr id="rowNotesBody">
+          <td class="row-header" id="notesBodyRowNum">20</td>
+          <td colspan="6" class="excel-cell" data-ref="A20" onclick="selectCell(this)">
+            <textarea id="invNotes" class="cell-textarea" rows="3" placeholder="Escribe aquí notas, forma de pago, cuenta CLABE o condiciones..." oninput="updateFormulaFromInput(this)">Pago mediante transferencia electrónica SPEI.
+Banco: BBVA México | Cuenta: 0123456789 | CLABE: 012180001234567890
+Gracias por su preferencia.</textarea>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </main>
+
+  <!-- ========================================================================
+       5. PESTAÑA INFERIOR Y BARRA DE ESTADO DE EXCEL
+       ======================================================================== -->
+  <footer class="excel-bottom-bar">
+    <div class="flex items-center h-full gap-3">
+      <div class="sheet-tab">
+        <span>Factura</span>
+      </div>
+      <span class="text-gray-500 hidden sm:inline">Listo</span>
+    </div>
+
+    <div class="flex items-center gap-4 text-gray-700 font-medium">
+      <span class="hidden md:inline text-xs text-gray-500">Conceptos: <strong id="statusItemCount">3</strong></span>
+      <span class="text-xs">Total Factura: <strong id="statusTotal" class="text-emerald-800">$0.00</strong></span>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       MODAL DE CONFIRMACIÓN PARA LIMPIAR / NUEVA FACTURA
+       ======================================================================== -->
+  <div id="resetModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-5 border border-gray-200">
+      <div class="flex items-center gap-2.5 text-emerald-800 font-bold text-base mb-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <h3 id="modalTitle">¿Crear Nueva Factura?</h3>
+      </div>
+      <p class="text-sm text-gray-600 mb-5">
+        Se limpiarán los datos actuales del cliente, los conceptos y se incrementará el folio automáticamente. ¿Deseas continuar?
+      </p>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeResetModal()" class="px-3.5 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition cursor-pointer">
+          Cancelar
+        </button>
+        <button type="button" onclick="confirmNewInvoice()" class="px-3.5 py-2 text-sm font-medium text-white bg-[#107C41] hover:bg-[#0B5A2E] rounded transition cursor-pointer">
+          Sí, nueva factura
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       LÓGICA JAVASCRIPT DE LA HOJA DE CÁLCULO Y FACTURACIÓN
+       ======================================================================== -->
+  <script>
+    // Estado inicial de conceptos prellenados para demostración inmediata
+    let conceptItems = [
+      { sku: 'SRV-01', desc: 'Consultoría e Implementación de Sistema ERP', qty: 1, unit: 'SRV', price: 8500.00 },
+      { sku: 'EQP-14', desc: 'Terminal Punto de Venta Táctil All-in-One', qty: 2, unit: 'PZA', price: 4250.00 },
+      { sku: 'LIC-03', desc: 'Licencia Anual de Soporte Técnico y Nube', qty: 1, unit: 'LIC', price: 1800.00 }
+    ];
+
+    let selectedConceptIndex = 0; // Índice de fila seleccionada dentro de conceptItems
+    let activeCellElement = null;
+
+    // Configuración de formato de moneda según selector
+    const currencyConfigs = {
+      MXN: { locale: 'es-MX', currency: 'MXN' },
+      USD: { locale: 'en-US', currency: 'USD' },
+      EUR: { locale: 'es-ES', currency: 'EUR' }
+    };
+
+    /**
+     * Formatea un número como divisa ($1,234.56)
+     */
+    function formatCurrency(amount) {
+      const code = document.getElementById('currencySelector').value || 'MXN';
+      const cfg = currencyConfigs[code] || currencyConfigs.MXN;
+      try {
+        return new Intl.NumberFormat(cfg.locale, {
+          style: 'currency',
+          currency: cfg.currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(isNaN(amount) ? 0 : amount);
+      } catch (e) {
+        return '$' + (isNaN(amount) ? 0 : amount).toFixed(2);
+      }
+    }
+
+    /**
+     * Inicializa la fecha actual en el campo de fecha
+     */
+    function setTodayDate() {
+      const dateInput = document.getElementById('invDate');
+      if (dateInput && !dateInput.value) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+      }
+    }
+
+    /**
+     * Renderiza las filas de productos/servicios en la cuadrícula (a partir de la fila 11)
+     */
+    function renderConceptRows() {
+      const tbody = document.getElementById('sheetBody');
+
+      // Eliminar filas dinámicas previas (clase .concept-row)
+      const existingRows = tbody.querySelectorAll('.concept-row');
+      existingRows.forEach(row => row.remove());
+
+      const startRow = 11;
+
+      conceptItems.forEach((item, index) => {
+        const excelRowNum = startRow + index;
+        const lineTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
+
+        const tr = document.createElement('tr');
+        tr.className = 'concept-row';
+        tr.dataset.row = excelRowNum;
+        tr.dataset.index = index;
+
+        tr.innerHTML = `
+          <td class="row-header">${excelRowNum}</td>
+          <td class="excel-cell" data-ref="A${excelRowNum}" onclick="selectCell(this, ${index})">
+            <input type="text" class="cell-input uppercase" value="${escapeHtml(item.sku)}"
+              placeholder="SKU"
+              oninput="updateItemField(${index}, 'sku', this.value, this)" />
+          </td>
+          <td class="excel-cell" data-ref="B${excelRowNum}" onclick="selectCell(this, ${index})">
+            <input type="text" class="cell-input" value="${escapeHtml(item.desc)}"
+              placeholder="Descripción del producto o servicio"
+              oninput="updateItemField(${index}, 'desc', this.value, this)" />
+          </td>
+          <td class="excel-cell" data-ref="C${excelRowNum}" onclick="selectCell(this, ${index})">
+            <input type="number" step="any" min="0" class="cell-input text-right font-mono" value="${item.qty}"
+              oninput="updateItemField(${index}, 'qty', this.value, this)" />
+          </td>
+          <td class="excel-cell" data-ref="D${excelRowNum}" onclick="selectCell(this, ${index})">
+            <input type="text" class="cell-input text-center uppercase" value="${escapeHtml(item.unit)}"
+              placeholder="PZA"
+              oninput="updateItemField(${index}, 'unit', this.value, this)" />
+          </td>
+          <td class="excel-cell" data-ref="E${excelRowNum}" onclick="selectCell(this, ${index})">
+            <input type="number" step="0.01" min="0" class="cell-input text-right font-mono" value="${item.price}"
+              oninput="updateItemField(${index}, 'price', this.value, this)" />
+          </td>
+          <td class="excel-cell calc-cell group" id="importe_${index}"
+              data-ref="F${excelRowNum}"
+              data-formula="=C${excelRowNum}*E${excelRowNum}"
+              onclick="selectCell(this, ${index})">
+            <div class="flex items-center justify-between gap-1">
+              <button type="button" onclick="event.stopPropagation(); deleteConceptRow(${index})"
+                class="delete-row-btn no-print" title="Eliminar esta fila">✕</button>
+              <span class="flex-1 text-right">${formatCurrency(lineTotal)}</span>
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      updateDynamicRowNumbersAndFormulas();
+      recalculateAll();
+    }
+
+    /**
+     * Actualiza los números de fila y fórmulas dinámicas del pie de tabla (Subtotal, IVA, Total, Notas)
+     */
+    function updateDynamicRowNumbersAndFormulas() {
+      const startRow = 11;
+      const count = conceptItems.length;
+      const lastConceptRow = count > 0 ? startRow + count - 1 : startRow;
+
+      const quickAddNum = startRow + count;
+      const subRow = quickAddNum + 1;
+      const ivaRow = quickAddNum + 2;
+      const totalRow = quickAddNum + 3;
+      const spacerRow = quickAddNum + 4;
+      const notesHeadRow = quickAddNum + 5;
+      const notesBodyRow = quickAddNum + 6;
+
+      // Actualizar números de encabezado de fila a la izquierda
+      document.getElementById('quickAddRowNum').textContent = quickAddNum;
+      document.getElementById('subRowNum').textContent = subRow;
+      document.getElementById('ivaRowNum').textContent = ivaRow;
+      document.getElementById('totalRowNum').textContent = totalRow;
+      document.getElementById('spacerNotesRowNum').textContent = spacerRow;
+      document.getElementById('notesHeaderRowNum').textContent = notesHeadRow;
+      document.getElementById('notesBodyRowNum').textContent = notesBodyRow;
+
+      // Actualizar referencias data-ref y fórmulas estilo Excel
+      const cellSub = document.getElementById('cellSubtotal');
+      cellSub.dataset.ref = `F${subRow}`;
+      cellSub.dataset.formula = count > 0 ? `=SUMA(F${startRow}:F${lastConceptRow})` : `=0`;
+
+      const ivaRate = parseFloat(document.getElementById('ivaSelector').value) || 0;
+      const ivaPctText = Math.round(ivaRate * 100) + '%';
+
+      const cellIva = document.getElementById('cellIva');
+      cellIva.dataset.ref = `F${ivaRow}`;
+      cellIva.dataset.formula = `=F${subRow}*${ivaPctText}`;
+
+      const cellTotal = document.getElementById('cellTotal');
+      cellTotal.dataset.ref = `F${totalRow}`;
+      cellTotal.dataset.formula = `=F${subRow}+F${ivaRow}`;
+
+      // Actualizar referencias de celdas adyacentes
+      document.querySelector('#rowSubtotal .inv-label').dataset.ref = `E${subRow}`;
+      document.querySelector('#rowIva .inv-label').dataset.ref = `E${ivaRow}`;
+      document.querySelector('#rowTotal .inv-label').dataset.ref = `E${totalRow}`;
+      document.querySelector('#rowNotesHeader td:last-child').dataset.ref = `A${notesHeadRow}`;
+      document.querySelector('#rowNotesBody td:last-child').dataset.ref = `A${notesBodyRow}`;
+
+      document.getElementById('statusItemCount').textContent = count;
+    }
+
+    /**
+     * Actualiza un campo del array de conceptos sin re-renderizar toda la tabla (mantiene el foco al escribir)
+     */
+    function updateItemField(index, field, value, inputEl) {
+      if (!conceptItems[index]) return;
+
+      if (field === 'qty' || field === 'price') {
+        conceptItems[index][field] = parseFloat(value) || 0;
+      } else {
+        conceptItems[index][field] = value;
+      }
+
+      // Actualizar celda de importe de esa fila
+      const lineTotal = (parseFloat(conceptItems[index].qty) || 0) * (parseFloat(conceptItems[index].price) || 0);
+      const importeCell = document.getElementById(`importe_${index}`);
+      if (importeCell) {
+        const span = importeCell.querySelector('span');
+        if (span) span.textContent = formatCurrency(lineTotal);
+      }
+
+      // Sincronizar barra de fórmulas con lo que el usuario escribe
+      if (inputEl) {
+        document.getElementById('formulaBarInput').value = value;
+      }
+
+      recalculateAll();
+    }
+
+    /**
+     * Recalcula Subtotal, IVA y Total general
+     */
+    function recalculateAll() {
+      let subtotal = 0;
+      conceptItems.forEach((item, index) => {
+        const lineTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
+        subtotal += lineTotal;
+
+        // Actualizar formato moneda en cada fila si cambió la divisa
+        const importeCell = document.getElementById(`importe_${index}`);
+        if (importeCell) {
+          const span = importeCell.querySelector('span');
+          if (span) span.textContent = formatCurrency(lineTotal);
+        }
+      });
+
+      const ivaRate = parseFloat(document.getElementById('ivaSelector').value) || 0;
+      const ivaPct = Math.round(ivaRate * 100);
+      const ivaAmount = subtotal * ivaRate;
+      const total = subtotal + ivaAmount;
+
+      document.getElementById('labelIva').textContent = `IVA (${ivaPct}%)`;
+      document.getElementById('labelIva').dataset.formula = `IVA (${ivaPct}%)`;
+      document.getElementById('cellSubtotal').textContent = formatCurrency(subtotal);
+      document.getElementById('cellIva').textContent = formatCurrency(ivaAmount);
+      document.getElementById('cellTotal').textContent = formatCurrency(total);
+      document.getElementById('statusTotal').textContent = formatCurrency(total);
+
+      updateDynamicRowNumbersAndFormulas();
+
+      // Si la celda activa es una celda calculada, actualizar barra de fórmulas
+      if (activeCellElement && activeCellElement.dataset.formula) {
+        document.getElementById('formulaBarInput').value = activeCellElement.dataset.formula;
+      }
+    }
+
+    /**
+     * Agrega una nueva fila vacía de producto/servicio
+     */
+    function addConceptRow() {
+      conceptItems.push({
+        sku: '',
+        desc: '',
+        qty: 1,
+        unit: 'PZA',
+        price: 0
+      });
+      selectedConceptIndex = conceptItems.length - 1;
+      renderConceptRows();
+
+      // Enfocar automáticamente el campo de descripción de la nueva fila
+      const tbody = document.getElementById('sheetBody');
+      const rows = tbody.querySelectorAll('.concept-row');
+      const lastRow = rows[rows.length - 1];
+      if (lastRow) {
+        const descInput = lastRow.children[2]?.querySelector('input');
+        if (descInput) {
+          descInput.focus();
+          selectCell(lastRow.children[2], selectedConceptIndex);
+        }
+      }
+    }
+
+    /**
+     * Elimina una fila de concepto por su índice
+     */
+    function deleteConceptRow(index) {
+      if (conceptItems.length <= 1) {
+        // Si solo queda una fila, limpiar sus valores en lugar de dejar la tabla vacía
+        conceptItems[0] = { sku: '', desc: '', qty: 1, unit: 'PZA', price: 0 };
+      } else {
+        conceptItems.splice(index, 1);
+      }
+      selectedConceptIndex = Math.max(0, Math.min(selectedConceptIndex, conceptItems.length - 1));
+      renderConceptRows();
+    }
+
+    /**
+     * Elimina la fila de concepto actualmente seleccionada desde el botón "- Fila" de la cinta
+     */
+    function deleteSelectedRow() {
+      const targetIdx = (selectedConceptIndex !== null && conceptItems[selectedConceptIndex])
+        ? selectedConceptIndex
+        : conceptItems.length - 1;
+      deleteConceptRow(targetIdx);
+    }
+
+    /**
+     * Selecciona una celda visualmente (borde verde, encabezados activos y barra de fórmulas)
+     */
+    function selectCell(cellEl, conceptIdx = null) {
+      if (!cellEl) return;
+
+      // Limpiar selección previa
+      document.querySelectorAll('.selected-cell').forEach(el => el.classList.remove('selected-cell'));
+      document.querySelectorAll('.active-col').forEach(el => el.classList.remove('active-col'));
+      document.querySelectorAll('.active-row').forEach(el => el.classList.remove('active-row'));
+
+      // Marcar celda actual
+      cellEl.classList.add('selected-cell');
+      activeCellElement = cellEl;
+
+      if (conceptIdx !== null) {
+        selectedConceptIndex = conceptIdx;
+      }
+
+      // Obtener referencia de celda (ej. C12)
+      const ref = cellEl.dataset.ref || 'A1';
+      document.getElementById('activeCellRef').textContent = ref;
+
+      // Resaltar encabezado de columna (A-F) y número de fila
+      const colLetter = ref.charAt(0);
+      const colHeader = document.querySelector(`.col-header[data-col="${colLetter}"]`);
+      if (colHeader) colHeader.classList.add('active-col');
+
+      const parentRow = cellEl.closest('tr');
+      if (parentRow) {
+        const rowHeader = parentRow.querySelector('.row-header');
+        if (rowHeader) rowHeader.classList.add('active-row');
+      }
+
+      // Mostrar fórmula o valor en la barra superior
+      const formulaInput = document.getElementById('formulaBarInput');
+      if (cellEl.dataset.formula !== undefined) {
+        formulaInput.value = cellEl.dataset.formula;
+      } else {
+        const innerInput = cellEl.querySelector('input, textarea');
+        formulaInput.value = innerInput ? innerInput.value : cellEl.textContent.trim();
+      }
+    }
+
+    /**
+     * Sincroniza la barra de fórmulas cuando se escribe en campos de cabecera o cliente
+     */
+    function updateFormulaFromInput(inputEl) {
+      document.getElementById('formulaBarInput').value = inputEl.value;
+    }
+
+    /**
+     * Control del modal para iniciar una nueva factura limpia
+     */
+    function openResetModal() {
+      document.getElementById('resetModal').classList.add('open');
+    }
+
+    function closeResetModal() {
+      document.getElementById('resetModal').classList.remove('open');
+    }
+
+    function confirmNewInvoice() {
+      // Incrementar folio si tiene formato texto-número (ej. FAC-001 -> FAC-002)
+      const folioInput = document.getElementById('invFolio');
+      const match = folioInput.value.match(/^(.*?)(\d+)$/);
+      if (match) {
+        const prefix = match[1];
+        const num = parseInt(match[2], 10) + 1;
+        folioInput.value = prefix + String(num).padStart(match[2].length, '0');
+      }
+
+      // Actualizar fecha a hoy
+      document.getElementById('invDate').value = '';
+      setTodayDate();
+
+      // Limpiar datos del cliente
+      document.getElementById('clienteNombre').value = '';
+      document.getElementById('clienteRfc').value = '';
+      document.getElementById('clienteDir').value = '';
+      document.getElementById('clienteContact').value = '';
+
+      // Reiniciar tabla con 1 fila limpia
+      conceptItems = [
+        { sku: '', desc: '', qty: 1, unit: 'PZA', price: 0 }
+      ];
+      selectedConceptIndex = 0;
+      renderConceptRows();
+      closeResetModal();
+
+      // Seleccionar celda de cliente para comenzar captura
+      const clientCell = document.querySelector('[data-ref="E5"]');
+      if (clientCell) {
+        selectCell(clientCell);
+        document.getElementById('clienteNombre').focus();
+      }
+    }
+
+    /**
+     * Escapa caracteres especiales HTML para evitar inyección en atributos value
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // Inicialización al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      setTodayDate();
+      renderConceptRows();
+      const initialCell = document.querySelector('[data-ref="A1"]');
+      if (initialCell) selectCell(initialCell);
+    });
+  </script>
+</body>
+</html>
