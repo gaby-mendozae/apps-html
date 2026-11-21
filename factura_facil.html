@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factura Fácil | Facturación para tu negocio</title>
+<style>
+:root{--ink:#172033;--muted:#667085;--line:#e5e9f0;--brand:#3157d5;--soft:#f4f6fb;--green:#16845b}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f9;color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:17px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+.brand{font-weight:800;font-size:19px;letter-spacing:-.5px}.brand span{color:var(--brand)}.tag{font-size:12px;color:var(--muted)}
+.wrap{max-width:1180px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:22px;align-items:start}
+.panel,.preview{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px #1b2b4a0a}
+.panel{padding:22px}.preview{padding:28px;position:sticky;top:85px}
+h1{font-size:22px;margin:0 0 5px;letter-spacing:-.5px}h2{font-size:15px;margin:0 0 15px}.intro{color:var(--muted);font-size:13px;margin-bottom:22px}
+.section{padding:18px 0;border-top:1px solid var(--line)}.section:first-of-type{border-top:0;padding-top:0}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}
+label{font-size:12px;font-weight:650;color:#475467}input,textarea,select{width:100%;border:1px solid #d9deea;border-radius:9px;padding:10px 11px;font:inherit;font-size:14px;color:var(--ink);background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 3px #3157d51a}
+textarea{resize:vertical;min-height:74px}.logo-row{display:flex;align-items:center;gap:12px}.logo-preview{width:62px;height:62px;border:1px dashed #cbd2df;border-radius:10px;display:grid;place-items:center;overflow:hidden;background:var(--soft);color:var(--muted);font-size:11px;text-align:center}.logo-preview img{width:100%;height:100%;object-fit:contain}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}.primary{background:var(--brand);color:#fff}.secondary{background:#eef2ff;color:var(--brand)}.ghost{background:#fff;border:1px solid var(--line);color:#475467}.danger{background:#fff1f1;color:#bd3434;padding:8px 10px}.add{padding:8px 11px}
+.item{border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:10px}.item-grid{display:grid;grid-template-columns:minmax(0,2fr) .65fr 1fr auto;gap:8px;align-items:end}.item-grid label{font-size:11px}.item-grid input{padding:9px 8px}.item-total{font-size:12px;color:var(--muted);text-align:right;margin-top:7px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.actions button{flex:1}
+.preview-top{display:flex;justify-content:space-between;gap:15px;border-bottom:2px solid var(--ink);padding-bottom:20px}.business{display:flex;gap:13px;align-items:flex-start}.business img{width:68px;height:68px;object-fit:contain}.business-name{font-size:18px;font-weight:800}.small{font-size:11px;color:var(--muted);line-height:1.6}.invoice-label{text-align:right}.invoice-label strong{display:block;font-size:25px;letter-spacing:1px}.invoice-label span{font-size:12px;color:var(--muted)}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:19px 0}.meta h3{font-size:10px;letter-spacing:1px;color:var(--muted);margin:0 0 7px}.meta p{margin:2px 0;font-size:12px}
+table{width:100%;border-collapse:collapse;margin:6px 0 17px}th{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#667085;text-align:left;background:#f5f7fb;padding:10px 8px}td{padding:11px 8px;border-bottom:1px solid var(--line);font-size:12px}th:last-child,td:last-child{text-align:right}.num{text-align:right}
+.bottom{display:grid;grid-template-columns:1fr 190px;gap:20px}.notes h3{font-size:10px;letter-spacing:1px;color:var(--muted)}.notes p{font-size:12px;white-space:pre-wrap}.totals div{display:flex;justify-content:space-between;padding:5px 0;font-size:12px}.totals .grand{border-top:1px solid var(--ink);margin-top:7px;padding-top:12px;font-size:17px;font-weight:800}.foot{text-align:center;color:var(--muted);font-size:10px;border-top:1px solid var(--line);margin-top:28px;padding-top:14px}
+@media(max-width:850px){.wrap{grid-template-columns:1fr}.preview{position:static}.panel{padding:17px}.preview{padding:20px}}
+@media(max-width:480px){header{padding:13px 15px}.tag{display:none}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.item-grid{grid-template-columns:1fr 1fr}.item-grid .desc{grid-column:1/-1}.item-grid button{align-self:end}.preview{padding:15px}.business img{width:48px;height:48px}.business-name{font-size:15px}.invoice-label strong{font-size:20px}.bottom{grid-template-columns:1fr}.meta{gap:10px}}
+@media print{body{background:#fff}.no-print,header,.panel{display:none!important}.wrap{display:block;margin:0;padding:0;max-width:none}.preview{border:0;box-shadow:none;border-radius:0;padding:0;position:static}.preview-inner{width:100%}@page{size:A4;margin:15mm}}
+</style>
+</head>
+<body>
+<header><div class="brand">Factura<span>Fácil</span></div><div class="tag">Una forma sencilla de cobrar profesionalmente</div></header>
+<main class="wrap">
+<section class="panel no-print">
+<h1>Crea tu factura</h1><div class="intro">Completa los datos y la vista previa se actualizará automáticamente. Puedes imprimirla o guardarla como PDF.</div>
+<div class="section">
+<div class="section-head"><h2>Datos de tu negocio</h2></div>
+<div class="logo-row" style="margin-bottom:14px"><div class="logo-preview" id="logoBox">Tu logo</div><div class="field" style="flex:1"><label for="logoInput">Logotipo (desde tu celular o computadora)</label><input id="logoInput" type="file" accept="image/*"><span class="small">Se incluirá en la factura.</span></div></div>
+<div class="grid">
+<div class="field full"><label>Nombre del negocio</label><input id="businessName" placeholder="Ej. Papelería Gaby"></div>
+<div class="field"><label>RFC</label><input id="businessRfc" placeholder="RFC del negocio"></div>
+<div class="field"><label>Teléfono</label><input id="businessPhone" placeholder="Teléfono"></div>
+<div class="field full"><label>Dirección</label><input id="businessAddress" placeholder="Calle, número, colonia, ciudad"></div>
+<div class="field full"><label>Correo electrónico</label><input id="businessEmail" type="email" placeholder="correo@negocio.com"></div>
+</div>
+</div>
+<div class="section">
+<div class="section-head"><h2>Datos de la factura</h2></div>
+<div class="grid">
+<div class="field"><label>Número de factura</label><input id="invoiceNo" value="F-001"></div>
+<div class="field"><label>Fecha</label><input id="invoiceDate" type="date"></div>
+</div>
+</div>
+<div class="section">
+<div class="section-head"><h2>Datos del cliente</h2></div>
+<div class="grid">
+<div class="field full"><label>Nombre o razón social</label><input id="clientName" placeholder="Nombre del cliente"></div>
+<div class="field"><label>RFC (opcional)</label><input id="clientRfc" placeholder="RFC"></div>
+<div class="field"><label>Teléfono (opcional)</label><input id="clientPhone" placeholder="Teléfono"></div>
+<div class="field full"><label>Dirección (opcional)</label><input id="clientAddress" placeholder="Dirección del cliente"></div>
+</div>
+</div>
+<div class="section">
+<div class="section-head"><h2>Productos o servicios</h2><button class="secondary add" id="addItem">+ Agregar</button></div>
+<div id="items"></div>
+<div class="grid" style="margin-top:12px">
+<div class="field"><label>IVA</label><select id="vat"><option value="16">16%</option><option value="8">8%</option><option value="0">0%</option></select></div>
+</div>
+</div>
+<div class="section">
+<div class="field"><label>Observaciones</label><textarea id="notes" placeholder="Gracias por tu compra."></textarea></div>
+</div>
+<div class="actions"><button class="primary" id="printBtn">Imprimir / Guardar PDF</button><button class="ghost" id="clearBtn" type="button">Limpiar formulario</button></div>
+<p class="small" style="margin-top:12px">Nota: esta herramienta genera un comprobante comercial sencillo; no emite CFDI ni sustituye una factura fiscal válida ante el SAT.</p>
+</section>
+<section class="preview" aria-label="Vista previa de la factura">
+<div class="preview-inner" id="invoice">
+<div class="preview-top">
+<div class="business"><img id="previewLogo" alt="" style="display:none"><div><div class="business-name" id="pBusinessName">Nombre de tu negocio</div><div class="small" id="pBusinessInfo">RFC · Dirección · Teléfono · Correo</div></div></div>
+<div class="invoice-label"><strong>FACTURA</strong><span id="pInvoiceNo">F-001</span><br><span id="pDate"></span></div>
+</div>
+<div class="meta">
+<div><h3>FACTURAR A</h3><p><strong id="pClientName">Nombre del cliente</strong></p><p id="pClientRfc"></p><p id="pClientPhone"></p><p id="pClientAddress"></p></div>
+<div><h3>DETALLES</h3><p>Moneda: MXN</p><p>Importes en pesos mexicanos</p></div>
+</div>
+<table><thead><tr><th>Descripción</th><th class="num">Cant.</th><th class="num">Precio unit.</th><th class="num">Importe</th></tr></thead><tbody id="previewRows"><tr><td>Producto o servicio</td><td class="num">1</td><td class="num">$0.00</td><td class="num">$0.00</td></tr></tbody></table>
+<div class="bottom"><div class="notes"><h3>OBSERVACIONES</h3><p id="pNotes">Gracias por tu compra.</p></div><div class="totals"><div><span>Subtotal</span><strong id="pSubtotal">$0.00</strong></div><div><span>IVA (<span id="pVatRate">16</span>%)</span><strong id="pVat">$0.00</strong></div><div class="grand"><span>Total</span><strong id="pTotal">$0.00</strong></div></div></div>
+<div class="foot">Gracias por tu preferencia.</div>
+</div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const fields=['businessName','businessRfc','businessPhone','businessAddress','businessEmail','invoiceNo','invoiceDate','clientName','clientRfc','clientPhone','clientAddress','notes','vat'];
+let logoData='';
+const money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0);
+const today=new Date(); $('invoiceDate').value=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+function addItem(desc='',qty=1,price=0){
+ const id='item'+Date.now()+Math.random().toString(16).slice(2);
+ const el=document.createElement('div');el.className='item';el.dataset.id=id;
+ el.innerHTML=`<div class="item-grid">
+ <div class="field desc"><label>Descripción</label><input class="descInput" placeholder="Producto o servicio"></div>
+ <div class="field"><label>Cantidad</label><input class="qtyInput" type="number" min="0" step="0.01" value="1"></div>
+ <div class="field"><label>Precio unitario ($)</label><input class="priceInput" type="number" min="0" step="0.01" value="0"></div>
+ <button class="danger remove" type="button" aria-label="Eliminar producto">✕</button></div><div class="item-total">Importe: <strong>$0.00</strong></div>`;
+ el.querySelector('.descInput').value=desc;el.querySelector('.qtyInput').value=qty;el.querySelector('.priceInput').value=price;
+ el.querySelectorAll('input').forEach(input=>input.addEventListener('input',update));
+ el.querySelector('.remove').addEventListener('click',()=>{el.remove();if(!$('items').children.length)addItem();update()});
+ $('items').appendChild(el);update();
+}
+function val(id){return $(id).value.trim()}
+function update(){
+ $('pBusinessName').textContent=val('businessName')||'Nombre de tu negocio';
+ const info=[val('businessRfc')?'RFC: '+val('businessRfc'):'',val('businessAddress'),val('businessPhone'),val('businessEmail')].filter(Boolean).join(' · ');
+ $('pBusinessInfo').textContent=info||'RFC · Dirección · Teléfono · Correo';
+ $('pInvoiceNo').textContent=val('invoiceNo')||'F-001';
+ $('pDate').textContent=val('invoiceDate')?new Date(val('invoiceDate')+'T12:00:00').toLocaleDateString('es-MX'):'';
+ $('pClientName').textContent=val('clientName')||'Nombre del cliente';
+ $('pClientRfc').textContent=val('clientRfc')?'RFC: '+val('clientRfc'):'';
+ $('pClientPhone').textContent=val('clientPhone')?'Tel.: '+val('clientPhone'):'';
+ $('pClientAddress').textContent=val('clientAddress');
+ $('pNotes').textContent=val('notes')||'—';
+ let subtotal=0,rows='';
+ [...$('items').children].forEach(item=>{
+  const desc=item.querySelector('.descInput').value.trim()||'Producto o servicio';
+  const qty=Math.max(0,Number(item.querySelector('.qtyInput').value)||0);
+  const price=Math.max(0,Number(item.querySelector('.priceInput').value)||0);
+  const amount=qty*price;subtotal+=amount;
+  item.querySelector('.item-total strong').textContent=money(amount);
+  rows+=`<tr><td>${escapeHtml(desc)}</td><td class="num">${qty.toLocaleString('es-MX')}</td><td class="num">${money(price)}</td><td class="num">${money(amount)}</td></tr>`;
+ });
+ $('previewRows').innerHTML=rows||'<tr><td colspan="4">Agrega productos o servicios</td></tr>';
+ const rate=Number(val('vat'))||0,tax=subtotal*rate/100;
+ $('pSubtotal').textContent=money(subtotal);$('pVat').textContent=money(tax);$('pTotal').textContent=money(subtotal+tax);$('pVatRate').textContent=rate;
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+fields.forEach(id=>$(id).addEventListener('input',update));
+$('addItem').addEventListener('click',()=>addItem());
+$('logoInput').addEventListener('change',e=>{
+ const file=e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){alert('Selecciona un archivo de imagen.');return}
+ const reader=new FileReader();reader.onload=()=>{logoData=reader.result;$('logoBox').innerHTML=`<img src="${logoData}" alt="Logotipo">`;$('previewLogo').src=logoData;$('previewLogo').style.display='block'};reader.readAsDataURL(file);
+});
+$('printBtn').addEventListener('click',()=>window.print());
+$('clearBtn').addEventListener('click',()=>{
+ if(!confirm('¿Deseas borrar los datos capturados?'))return;
+ fields.forEach(id=>$(id).value='');$('invoiceNo').value='F-001';$('invoiceDate').value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('vat').value='16';
+ $('logoInput').value='';logoData='';$('logoBox').textContent='Tu logo';$('previewLogo').removeAttribute('src');$('previewLogo').style.display='none';$('items').innerHTML='';addItem();update();
+});
+addItem();update();
+</script>
+</body>
+</html>
