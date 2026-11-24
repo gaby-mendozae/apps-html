@@ -10,6 +10,9 @@
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --danger: #ef4444;
         }
 
         body {
@@ -20,9 +23,70 @@
             padding: 30px 20px 60px;
         }
 
+        /* Pantalla de inicio de sesión */
+        .login-wrapper {
+            min-height: calc(100vh - 90px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 14px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            box-sizing: border-box;
+        }
+
+        .login-card h1 {
+            margin: 0 0 6px;
+            font-size: 1.55rem;
+        }
+
+        .login-card p {
+            margin: 0 0 22px;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .login-error {
+            color: var(--danger);
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+
+        .app-content {
+            display: none;
+        }
+
+        body.authenticated .app-content {
+            display: block;
+        }
+
+        body.authenticated .login-wrapper {
+            display: none;
+        }
+
         .top-bar {
             max-width: 1100px;
             margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header-titles h1 {
@@ -34,6 +98,58 @@
             margin: 5px 0 0;
             color: var(--text-muted);
             font-size: 0.95rem;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-sizing: border-box;
         }
 
         .catalogo {
@@ -102,15 +218,44 @@
 </head>
 <body>
 
-    <div class="top-bar">
-        <div class="header-titles">
-            <h1>Catálogo de Cursos</h1>
-            <p>Selecciona un curso para acceder a su plataforma</p>
+    <!-- Pantalla de Inicio de Sesión -->
+    <div class="login-wrapper" id="loginScreen">
+        <div class="login-card">
+            <h1>Iniciar sesión</h1>
+            <p>Acceso al catálogo de cursos</p>
+
+            <div class="login-error" id="loginError"></div>
+
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico</label>
+                    <input type="email" id="loginEmail" required autocomplete="username" placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="btn" id="btnLogin" style="width: 100%;">Entrar</button>
+            </form>
         </div>
     </div>
 
-    <div class="catalogo" id="catalogoContainer">
-        <div class="status-msg" id="msgCarga">Cargando cursos...</div>
+    <!-- Contenido Principal del Catálogo -->
+    <div class="app-content" id="appContent">
+        <div class="top-bar">
+            <div class="header-titles">
+                <h1>Catálogo de Cursos</h1>
+                <p>Selecciona un curso para acceder a su plataforma</p>
+            </div>
+
+            <button type="button" class="btn btn-secondary" id="btnLogout">Cerrar sesión</button>
+        </div>
+
+        <div class="catalogo" id="catalogoContainer">
+            <div class="status-msg" id="msgCarga">Conectando con Firestore...</div>
+        </div>
     </div>
 
     <script type="module">
@@ -118,6 +263,9 @@
         import {
             getFirestore, collection, onSnapshot, query, orderBy
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import {
+            getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDP3tRt4ulRkco5x5U7lT2nDbU22YAsglU",
@@ -128,22 +276,62 @@
             appId: "1:748124476504:web:55d8c5f290890db343662d"
         };
 
-        const catalogoContainer = document.getElementById("catalogoContainer");
+        const AUTHORIZED_UID = "7YyNbVuvAHe6SwDwnD7NDfe6V0v2";
+
+        let db, auth;
+        let unsubscribeCursos = null;
 
         try {
             const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (error) {
+            console.error("Error al inicializar Firebase:", error);
+            document.getElementById("msgCarga").innerHTML = `<span style="color: #ef4444;">Error al iniciar Firebase.</span>`;
+        }
+
+        const formLogin = document.getElementById("formLogin");
+        const loginEmail = document.getElementById("loginEmail");
+        const loginPassword = document.getElementById("loginPassword");
+        const btnLogin = document.getElementById("btnLogin");
+        const loginError = document.getElementById("loginError");
+        const btnLogout = document.getElementById("btnLogout");
+        const catalogoContainer = document.getElementById("catalogoContainer");
+
+        function mostrarErrorLogin(mensaje) {
+            loginError.textContent = mensaje;
+            loginError.classList.add("visible");
+        }
+
+        function ocultarErrorLogin() {
+            loginError.textContent = "";
+            loginError.classList.remove("visible");
+        }
+
+        function resetearEstadoUI() {
+            if (unsubscribeCursos) {
+                unsubscribeCursos();
+                unsubscribeCursos = null;
+            }
+            catalogoContainer.innerHTML = `<div class="status-msg" id="msgCarga">Conectando con Firestore...</div>`;
+        }
+
+        function iniciarEscuchaCursos() {
+            if (!db) return;
+            if (unsubscribeCursos) {
+                unsubscribeCursos();
+            }
 
             const cursosRef = collection(db, "cursos");
             const q = query(cursosRef, orderBy("creado", "asc"));
 
-            onSnapshot(q, (snapshot) => {
+            unsubscribeCursos = onSnapshot(q, (snapshot) => {
                 catalogoContainer.innerHTML = "";
 
                 if (snapshot.empty) {
                     catalogoContainer.innerHTML = `
                         <div class="status-msg">
-                            Por el momento no hay cursos disponibles.
+                            Aún no hay cursos disponibles.
                         </div>`;
                     return;
                 }
@@ -166,19 +354,69 @@
                     catalogoContainer.appendChild(card);
                 });
             }, (error) => {
-                console.error("Error al cargar cursos desde Firestore:", error);
+                console.error("Error en la consulta Firestore:", error);
                 catalogoContainer.innerHTML = `
                     <div class="status-msg" style="color: #ef4444;">
-                        No se pudieron cargar los cursos en este momento.
+                        Error de permisos en Firestore.
                     </div>`;
             });
-        } catch (error) {
-            console.error("Error al inicializar Firebase:", error);
-            catalogoContainer.innerHTML = `
-                <div class="status-msg" style="color: #ef4444;">
-                    Error al conectar con el catálogo.
-                </div>`;
         }
+
+        if (auth) {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    if (user.uid === AUTHORIZED_UID) {
+                        ocultarErrorLogin();
+                        document.body.classList.add("authenticated");
+                        iniciarEscuchaCursos();
+                    } else {
+                        resetearEstadoUI();
+                        document.body.classList.remove("authenticated");
+                        await signOut(auth);
+                        mostrarErrorLogin("Acceso denegado: tu cuenta no tiene permisos para este catálogo.");
+                    }
+                } else {
+                    resetearEstadoUI();
+                    document.body.classList.remove("authenticated");
+                }
+            });
+        }
+
+        formLogin.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!auth) return;
+
+            ocultarErrorLogin();
+            btnLogin.disabled = true;
+            btnLogin.textContent = "Verificando...";
+
+            try {
+                const email = loginEmail.value.trim();
+                const password = loginPassword.value;
+                const cred = await signInWithEmailAndPassword(auth, email, password);
+
+                if (cred.user.uid !== AUTHORIZED_UID) {
+                    await signOut(auth);
+                    mostrarErrorLogin("Acceso denegado: este usuario no está autorizado.");
+                }
+            } catch (error) {
+                console.error("Error al iniciar sesión:", error);
+                mostrarErrorLogin("Correo o contraseña incorrectos.");
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.textContent = "Entrar";
+            }
+        });
+
+        btnLogout.addEventListener("click", async () => {
+            if (!auth) return;
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Error al cerrar sesión:", error);
+                alert("No se pudo cerrar la sesión: " + error.message);
+            }
+        });
     </script>
 </body>
 </html>
