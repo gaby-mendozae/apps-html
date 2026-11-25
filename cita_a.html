@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>¿Y si pintas mi inicial? 🎨✨</title>
+
+  <!-- Tipografía cálida y editorial -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Confeti ligero para momentos festivos -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-warm: #FAF6F0;
+      --surface: #FFFDF9;
+      --ink: #24201E;
+      --muted: #786E66;
+      --accent: #D97E93;
+      --accent-dark: #BA5F75;
+      --gold: #C99A5B;
+      --border: rgba(138, 105, 73, 0.16);
+      --shadow-lg: 0 24px 48px -14px rgba(68, 46, 28, 0.18);
+      --shadow-sm: 0 6px 16px -4px rgba(68, 46, 28, 0.08);
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 100dvh;
+      font-family: var(--font-sans);
+      background-color: var(--bg-warm);
+      color: var(--ink);
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 10%, rgba(242, 181, 196, 0.28) 0%, transparent 45%),
+        radial-gradient(circle at 88% 90%, rgba(155, 196, 226, 0.26) 0%, transparent 45%);
+    }
+
+    /* ==========================================================================
+       1. PANTALLA DE APERTURA (OVERLAY CORTO Y JUGUETÓN)
+       ========================================================================== */
+    .overlay-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: linear-gradient(165deg, #FFFDF9 0%, #F4ECE1 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .overlay-screen.hidden {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(217, 126, 147, 0.14);
+      color: var(--accent-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      animation: floatGentle 3s ease-in-out infinite;
+    }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .wood-hero-badge {
+      width: 96px;
+      height: 96px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #E2C3A3 0%, #B88B62 100%);
+      box-shadow: 0 16px 30px rgba(115, 76, 42, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 3.4rem;
+      font-weight: 700;
+      color: #FFFDF9;
+      text-shadow: 0 3px 6px rgba(85, 52, 24, 0.35);
+      margin-bottom: 1.6rem;
+      transform: rotate(-4deg);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 7.5vw, 3rem);
+      line-height: 1.1;
+      color: var(--ink);
+      max-width: 420px;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-sub {
+      font-size: 1.02rem;
+      color: var(--muted);
+      max-width: 310px;
+      margin-bottom: 2.2rem;
+      font-weight: 500;
+    }
+
+    .btn-primary-cta {
+      border: none;
+      border-radius: 999px;
+      padding: 1.15rem 2.2rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #FFFDF9;
+      background: linear-gradient(135deg, #272321 0%, #463D39 100%);
+      box-shadow: 0 18px 34px -10px rgba(39, 35, 33, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-primary-cta:active {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================================================
+       2. ESTUDIO TÁCTIL DE PINTURA SOBRE MADERA 3D
+       ========================================================================== */
+    .studio-shell {
+      max-width: 480px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: 0.85rem 1rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.72rem;
+    }
+
+    /* Barra superior */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .letter-switch {
+      display: inline-flex;
+      background: rgba(138, 105, 73, 0.11);
+      padding: 0.25rem;
+      border-radius: 999px;
+      gap: 0.2rem;
+    }
+
+    .switch-tab {
+      border: none;
+      background: transparent;
+      padding: 0.4rem 0.88rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .switch-tab.active {
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .icon-action-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 0.42rem 0.78rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease;
+    }
+
+    .icon-action-btn:active {
+      transform: scale(0.94);
+    }
+
+    /* Escenario del Lienzo 3D */
+    .canvas-card {
+      background: var(--surface);
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: 0.65rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 270px;
+      max-height: 390px;
+    }
+
+    .canvas-hint {
+      position: absolute;
+      top: 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(250, 246, 240, 0.92);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border);
+      padding: 0.24rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 3;
+      transition: opacity 0.3s ease;
+    }
+
+    .canvas-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #paintCanvas {
+      width: 270px;
+      height: 270px;
+      max-width: 72vw;
+      max-height: 72vw;
+      touch-action: none;
+      cursor: crosshair;
+      display: block;
+    }
+
+    /* Drawer discreto de Ideas Rápidas */
+    .ideas-bar {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.42rem;
+      flex-wrap: wrap;
+      background: rgba(255, 253, 249, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 0.5rem;
+      box-shadow: var(--shadow-sm);
+      animation: fadeSlide 0.2s ease;
+    }
+
+    .ideas-bar.open {
+      display: flex;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .idea-chip {
+      border: 1px solid var(--border);
+      background: var(--bg-warm);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 0.34rem 0.72rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .idea-chip:active {
+      transform: scale(0.95);
+    }
+
+    /* Panel de Controles Táctiles */
+    .controls-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 0.75rem 0.85rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.68rem;
+    }
+
+    /* Fila de colores */
+    .colors-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.32rem;
+      overflow-x: auto;
+      padding: 0.15rem 0.1rem;
+    }
+
+    .color-dot {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      border: 2.5px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .color-dot.active {
+      transform: scale(1.18);
+      box-shadow: 0 0 0 2.5px var(--ink), 0 4px 10px rgba(0, 0, 0, 0.18);
+    }
+
+    .custom-color-wrap {
+      position: relative;
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #ff7eb3, #ff758c, #ffd166, #06d6a0, #118ab2, #9b5de5, #ff7eb3);
+      border: 2.5px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+      flex-shrink: 0;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .custom-color-wrap input[type="color"] {
+      position: absolute;
+      inset: -8px;
+      width: 48px;
+      height: 48px;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* Fila de Herramientas y Grosor */
+    .tools-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .tool-group {
+      display: inline-flex;
+      background: var(--bg-warm);
+      padding: 0.24rem;
+      border-radius: 14px;
+      gap: 0.2rem;
+    }
+
+    .tool-btn {
+      border: none;
+      background: transparent;
+      border-radius: 11px;
+      padding: 0.42rem 0.62rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.18s ease;
+    }
+
+    .tool-btn.active {
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .size-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-warm);
+      padding: 0.24rem 0.45rem;
+      border-radius: 14px;
+      gap: 0.45rem;
+    }
+
+    .size-btn {
+      border: none;
+      background: transparent;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .size-btn.active {
+      background: var(--surface);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .size-circle {
+      background: var(--ink);
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Botón Final "¡Listo, así quedó!" */
+    .btn-finish {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 1rem 1.5rem;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #FFFDF9;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      box-shadow: 0 14px 28px -8px rgba(186, 95, 117, 0.5);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      transition: transform 0.18s ease;
+    }
+
+    .btn-finish:active {
+      transform: scale(0.97);
+    }
+
+    /* ==========================================================================
+       3. GRAN REVELACIÓN FINAL ("¡QUEDÓ INCREÍBLE! AHORA HAY QUE HACERLO DE VERDAD")
+       ========================================================================== */
+    #reveal-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      background: rgba(36, 32, 30, 0.55);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    #reveal-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .reveal-card {
+      background: linear-gradient(180deg, #FFFDF9 0%, #F7EFE4 100%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 32px;
+      padding: 1.65rem 1.4rem;
+      width: 100%;
+      max-width: 410px;
+      text-align: center;
+      box-shadow: 0 30px 60px -15px rgba(20, 14, 10, 0.45);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #reveal-modal.open .reveal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .reveal-tag {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(201, 154, 91, 0.18);
+      color: #8C6229;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .framed-art {
+      width: 195px;
+      height: 195px;
+      margin: 0 auto 1.15rem;
+      border-radius: 24px;
+      background: #FFFFFF;
+      padding: 0.65rem;
+      box-shadow: 0 14px 30px rgba(74, 52, 33, 0.16), inset 0 0 0 1px rgba(138, 105, 73, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .framed-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .reveal-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.65rem, 6vw, 2.1rem);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .reveal-sub {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--muted);
+      margin-bottom: 1.45rem;
+      font-weight: 500;
+    }
+
+    .reveal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .btn-save-art {
+      border: none;
+      border-radius: 999px;
+      padding: 0.95rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #FFFDF9;
+      background: linear-gradient(135deg, #272321 0%, #463D39 100%);
+      box-shadow: 0 12px 24px -8px rgba(39, 35, 33, 0.4);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-retouch {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.78rem 1.2rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* Toast discreto */
+    .toast-msg {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #24201E;
+      color: #FFFDF9;
+      padding: 0.65rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: all 0.3s ease;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-height: 750px) {
+      #paintCanvas {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. PANTALLA DE APERTURA (RETO JUGUETÓN)
+       ======================================================================== -->
+  <section id="introOverlay" class="overlay-screen" aria-label="Reto de pintura">
+    <div class="pill-badge">Te amo</div>
+
+    <div class="wood-hero-badge" aria-hidden="true">G</div>
+
+    <h1 class="hero-title">¿Y si pintas mi inicial?</h1>
+    <p class="hero-sub">Diseña la <strong>G</strong> a tu estilo con tu dedo.</p>
+
+    <button type="button" class="btn-primary-cta" id="startChallengeBtn">
+      <span>¡Acepto el reto!</span>
+      <span>🎨</span>
+    </button>
+  </section>
+
+  <!-- ========================================================================
+       2. LIENZO INTERACTIVO DE MADERA 3D
+       ======================================================================== -->
+  <main class="studio-shell">
+    <!-- Barra superior: alternar G / Y + Deshacer / Ideas / Limpiar -->
+    <header class="top-bar">
+      <div class="letter-switch" role="tablist" aria-label="Elegir inicial">
+        <button type="button" class="switch-tab active" data-letter="G">Letra G</button>
+        <button type="button" class="switch-tab" data-letter="Y">Letra Y</button>
+      </div>
+
+      <div class="top-actions">
+        <button type="button" class="icon-action-btn" id="toggleIdeasBtn" title="Ideas rápidas">
+          <span>✨ Ideas</span>
+        </button>
+        <button type="button" class="icon-action-btn" id="undoBtn" title="Deshacer">
+          <span>↩️</span>
+        </button>
+        <button type="button" class="icon-action-btn" id="clearBtn" title="Limpiar madera">
+          <span>🗑️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Barra opcional de Ideas Rápidas en 1 toque -->
+    <div class="ideas-bar" id="ideasBar">
+      <button type="button" class="idea-chip" data-preset="half">🌗 Mitad y mitad</button>
+      <button type="button" class="idea-chip" data-preset="gradient">🌅 Degradado</button>
+      <button type="button" class="idea-chip" data-preset="dots">⚪ Lunares</button>
+      <button type="button" class="idea-chip" data-preset="stripes">🦓 Rayas</button>
+    </div>
+
+    <!-- Pieza de madera 3D interactiva -->
+    <section class="canvas-card">
+      <div class="canvas-hint" id="canvasHint">Desliza tu dedo sobre la G para pintar</div>
+      <div class="canvas-wrapper">
+        <canvas id="paintCanvas" width="600" height="600"></canvas>
+      </div>
+    </section>
+
+    <!-- Herramientas táctiles -->
+    <section class="controls-panel" aria-label="Herramientas de pintura">
+      <!-- Paleta rápida + selector libre -->
+      <div class="colors-row" id="colorsRow">
+        <button type="button" class="color-dot active" data-color="#F2A6B8" style="background:#F2A6B8" aria-label="Rosa pastel"></button>
+        <button type="button" class="color-dot" data-color="#89BBE0" style="background:#89BBE0" aria-label="Azul cielo"></button>
+        <button type="button" class="color-dot" data-color="#2B4C7E" style="background:#2B4C7E" aria-label="Azul marino"></button>
+        <button type="button" class="color-dot" data-color="#FFFDF9" style="background:#FFFDF9" aria-label="Blanco crema"></button>
+        <button type="button" class="color-dot" data-color="#24201E" style="background:#24201E" aria-label="Negro"></button>
+        <button type="button" class="color-dot" data-color="#F3C969" style="background:#F3C969" aria-label="Dorado suave"></button>
+        <button type="button" class="color-dot" data-color="#8ED1BD" style="background:#8ED1BD" aria-label="Menta"></button>
+        <button type="button" class="color-dot" data-color="#EE8572" style="background:#EE8572" aria-label="Coral"></button>
+        <label class="custom-color-wrap" title="Elegir cualquier color">
+          <input type="color" id="customColorPicker" value="#C3A6E3" />
+        </label>
+      </div>
+
+      <!-- Herramientas (Pincel, Lunares, Salpicado, Borrador) y Grosor -->
+      <div class="tools-row">
+        <div class="tool-group" role="group" aria-label="Tipo de pincel">
+          <button type="button" class="tool-btn active" data-tool="brush">🖌️ Pincel</button>
+          <button type="button" class="tool-btn" data-tool="dots">⚪ Puntos</button>
+          <button type="button" class="tool-btn" data-tool="splatter">💦 Gotas</button>
+          <button type="button" class="tool-btn" data-tool="eraser">🧽</button>
+        </div>
+
+        <div class="size-group" role="group" aria-label="Tamaño de pincel">
+          <button type="button" class="size-btn" data-size="14" aria-label="Fino">
+            <span class="size-circle" style="width:7px;height:7px;"></span>
+          </button>
+          <button type="button" class="size-btn active" data-size="28" aria-label="Mediano">
+            <span class="size-circle" style="width:13px;height:13px;"></span>
+          </button>
+          <button type="button" class="size-btn" data-size="48" aria-label="Grueso">
+            <span class="size-circle" style="width:19px;height:19px;"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botón principal de finalización -->
+    <button type="button" class="btn-finish" id="finishBtn">
+      <span>¡Listo, así quedó!</span>
+      <span>✨</span>
+    </button>
+  </main>
+
+  <!-- ========================================================================
+       3. GRAN REVELACIÓN FINAL ("AHORA HAY QUE HACERLO DE VERDAD")
+       ======================================================================== -->
+  <div id="reveal-modal" role="dialog" aria-modal="true" aria-labelledby="revealTitle">
+    <div class="reveal-card">
+      <div class="reveal-tag">✨ Misión Real Desbloqueada</div>
+
+      <div class="framed-art">
+        <img id="finalArtPreview" alt="Tu diseño pintado sobre madera" />
+      </div>
+
+      <h2 class="reveal-title" id="revealTitle">¡Quedó increíble! Ahora hay que hacerlo de verdad 🎨✨</h2>
+      <p class="reveal-sub">Tengo las pinturas, los pinceles y nuestras letras listas... ¿vamos?</p>
+
+      <div class="reveal-actions">
+        <button type="button" class="btn-save-art" id="downloadArtBtn">
+          <span>Guardar recuerdo de nuestro diseño</span>
+          <span>📸</span>
+        </button>
+        <button type="button" class="btn-retouch" id="retouchBtn">Seguir retocando</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toastMsg">¡Diseño guardado en tu galería! ✨</div>
+
+  <script>
+    /* ==========================================================================
+       ESTADO Y CAPAS DEL LIENZO EN MADERA 3D
+       ========================================================================== */
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    const SIZE = 600;
+    const CX = SIZE / 2;
+    const CY = SIZE / 2 + 20;
+    const FONT_SIZE = 465;
+
+    // Capa oculta donde vive exclusivamente la pintura aplicada por el usuario
+    const paintLayer = document.createElement('canvas');
+    paintLayer.width = SIZE;
+    paintLayer.height = SIZE;
+    const pCtx = paintLayer.getContext('2d');
+
+    // Capa oculta con la textura de madera natural base
+    const woodBaseLayer = document.createElement('canvas');
+    woodBaseLayer.width = SIZE;
+    woodBaseLayer.height = SIZE;
+    const wCtx = woodBaseLayer.getContext('2d');
+
+    const state = {
+      letter: 'G',
+      color: '#F2A6B8',
+      tool: 'brush',      // 'brush' | 'dots' | 'splatter' | 'eraser'
+      brushSize: 28,
+      isDrawing: false,
+      lastX: 0,
+      lastY: 0,
+      history: [],
+      hasTouched: false
+    };
+
+    /* ==========================================================================
+       1. GENERACIÓN DE TEXTURA DE MADERA NATURAL REALISTA
+       ========================================================================== */
+    function buildWoodTexture() {
+      const grad = wCtx.createLinearGradient(0, 0, SIZE, SIZE);
+      grad.addColorStop(0, '#E8CCA8');
+      grad.addColorStop(0.5, '#DCBA90');
+      grad.addColorStop(1, '#CFA77A');
+      wCtx.fillStyle = grad;
+      wCtx.fillRect(0, 0, SIZE, SIZE);
+
+      // Vetas orgánicas de madera
+      for (let y = 0; y < SIZE; y += 6) {
+        wCtx.beginPath();
+        wCtx.strokeStyle = y % 18 === 0 ? 'rgba(138, 94, 52, 0.14)' : 'rgba(165, 118, 72, 0.08)';
+        wCtx.lineWidth = (y % 24 === 0) ? 2.4 : 1.2;
+        wCtx.moveTo(0, y);
+        for (let x = 0; x <= SIZE; x += 40) {
+          const wave = Math.sin(x * 0.012 + y * 0.04) * 5 + Math.cos(y * 0.08) * 2;
+          wCtx.lineTo(x, y + wave);
+        }
+        wCtx.stroke();
+      }
+    }
+
+    function drawLetterShape(targetCtx, letter, offsetX = 0, offsetY = 0) {
+      targetCtx.font = `700 ${FONT_SIZE}px "Fraunces", Georgia, serif`;
+      targetCtx.textAlign = 'center';
+      targetCtx.textBaseline = 'middle';
+      targetCtx.fillText(letter, CX + offsetX, CY + offsetY);
+    }
+
+    /* ==========================================================================
+       2. COMPOSICIÓN 3D FINAL (EXTRUSIÓN + MADERA + PINTURA RECORTADA)
+       ========================================================================== */
+    function renderScene() {
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      // Sombra proyectada de la pieza sobre la superficie
+      ctx.save();
+      ctx.shadowColor = 'rgba(65, 42, 22, 0.25)';
+      ctx.shadowBlur = 32;
+      ctx.shadowOffsetX = 14;
+      ctx.shadowOffsetY = 24;
+      ctx.fillStyle = '#A87C54';
+      drawLetterShape(ctx, state.letter, 12, 16);
+      ctx.restore();
+
+      // Extrusión 3D lateral (grosor de la madera)
+      const depth = 18;
+      for (let i = depth; i >= 1; i--) {
+        const r = Math.round(168 - i * 2.5);
+        const g = Math.round(124 - i * 2.1);
+        const b = Math.round(84 - i * 1.7);
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        drawLetterShape(ctx, state.letter, i * 0.85, i * 1.15);
+      }
+
+      // Cara frontal recortada exactamente a la silueta de la letra
+      const faceCanvas = document.createElement('canvas');
+      faceCanvas.width = SIZE;
+      faceCanvas.height = SIZE;
+      const fCtx = faceCanvas.getContext('2d');
+
+      fCtx.fillStyle = '#000';
+      drawLetterShape(fCtx, state.letter, 0, 0);
+      fCtx.globalCompositeOperation = 'source-in';
+
+      // 1) Base de madera natural
+      fCtx.drawImage(woodBaseLayer, 0, 0);
+
+      // 2) Pintura aplicada por el usuario encima
+      fCtx.drawImage(paintLayer, 0, 0);
+
+      // 3) Textura sutil de veta de madera atravesando la pintura para realismo táctil
+      fCtx.globalCompositeOperation = 'multiply';
+      fCtx.globalAlpha = 0.16;
+      fCtx.drawImage(woodBaseLayer, 0, 0);
+      fCtx.globalAlpha = 1;
+
+      // 4) Biselado superior suave para volumen 3D
+      fCtx.globalCompositeOperation = 'source-atop';
+      const bevel = fCtx.createLinearGradient(0, 60, 0, SIZE - 60);
+      bevel.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
+      bevel.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+      bevel.addColorStop(1, 'rgba(40, 24, 12, 0.16)');
+      fCtx.fillStyle = bevel;
+      fCtx.fillRect(0, 0, SIZE, SIZE);
+
+      ctx.drawImage(faceCanvas, 0, 0);
+    }
+
+    /* ==========================================================================
+       3. HISTORIAL (DESHACER) Y MECÁNICAS DE PINTURA TÁCTIL
+       ========================================================================== */
+    function saveSnapshot() {
+      if (state.history.length >= 20) state.history.shift();
+      state.history.push(pCtx.getImageData(0, 0, SIZE, SIZE));
+    }
+
+    function getCanvasCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: ((clientX - rect.left) / rect.width) * SIZE,
+        y: ((clientY - rect.top) / rect.height) * SIZE
+      };
+    }
+
+    function hideHintOnce() {
+      if (!state.hasTouched) {
+        state.hasTouched = true;
+        document.getElementById('canvasHint').style.opacity = '0';
+      }
+    }
+
+    function applyStroke(x, y, isStart = false) {
+      pCtx.save();
+
+      if (state.tool === 'eraser') {
+        pCtx.globalCompositeOperation = 'destination-out';
+        pCtx.lineCap = 'round';
+        pCtx.lineJoin = 'round';
+        pCtx.lineWidth = state.brushSize * 1.25;
+        pCtx.beginPath();
+        if (isStart) {
+          pCtx.arc(x, y, state.brushSize * 0.62, 0, Math.PI * 2);
+          pCtx.fill();
+        } else {
+          pCtx.moveTo(state.lastX, state.lastY);
+          pCtx.lineTo(x, y);
+          pCtx.stroke();
+        }
+      } else if (state.tool === 'brush') {
+        pCtx.globalCompositeOperation = 'source-over';
+        pCtx.strokeStyle = state.color;
+        pCtx.fillStyle = state.color;
+        pCtx.lineCap = 'round';
+        pCtx.lineJoin = 'round';
+        pCtx.lineWidth = state.brushSize;
+        pCtx.beginPath();
+        if (isStart) {
+          pCtx.arc(x, y, state.brushSize / 2, 0, Math.PI * 2);
+          pCtx.fill();
+        } else {
+          pCtx.moveTo(state.lastX, state.lastY);
+          pCtx.lineTo(x, y);
+          pCtx.stroke();
+        }
+      } else if (state.tool === 'dots') {
+        // Estampa lunares limpios con cada toque o arrastre espaciado
+        const dist = Math.hypot(x - state.lastX, y - state.lastY);
+        if (isStart || dist >= state.brushSize * 1.35) {
+          pCtx.fillStyle = state.color;
+          pCtx.beginPath();
+          pCtx.arc(x, y, state.brushSize * 0.55, 0, Math.PI * 2);
+          pCtx.fill();
+          state.lastX = x;
+          state.lastY = y;
+        }
+      } else if (state.tool === 'splatter') {
+        // Salpicado orgánico de gotitas de pintura
+        pCtx.fillStyle = state.color;
+        const drops = 7;
+        for (let i = 0; i < drops; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.random() * state.brushSize * 1.3;
+          const dropX = x + Math.cos(angle) * radius;
+          const dropY = y + Math.sin(angle) * radius;
+          const dropR = (Math.random() * 0.35 + 0.12) * state.brushSize;
+          pCtx.beginPath();
+          pCtx.arc(dropX, dropY, dropR, 0, Math.PI * 2);
+          pCtx.fill();
+        }
+      }
+
+      pCtx.restore();
+      if (state.tool !== 'dots') {
+        state.lastX = x;
+        state.lastY = y;
+      }
+      renderScene();
+    }
+
+    // Eventos táctiles y de ratón
+    function handlePointerDown(e) {
+      e.preventDefault();
+      hideHintOnce();
+      saveSnapshot();
+      state.isDrawing = true;
+      const { x, y } = getCanvasCoords(e);
+      state.lastX = x;
+      state.lastY = y;
+      applyStroke(x, y, true);
+    }
+
+    function handlePointerMove(e) {
+      if (!state.isDrawing) return;
+      e.preventDefault();
+      const { x, y } = getCanvasCoords(e);
+      applyStroke(x, y, false);
+    }
+
+    function handlePointerUp() {
+      state.isDrawing = false;
+    }
+
+    canvas.addEventListener('mousedown', handlePointerDown);
+    canvas.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('mouseup', handlePointerUp);
+
+    canvas.addEventListener('touchstart', handlePointerDown, { passive: false });
+    canvas.addEventListener('touchmove', handlePointerMove, { passive: false });
+    window.addEventListener('touchend', handlePointerUp);
+
+    /* ==========================================================================
+       4. IDEAS RÁPIDAS (PRESETS OPCIONALES EN 1 TOQUE)
+       ========================================================================== */
+    function applyQuickIdea(type) {
+      hideHintOnce();
+      saveSnapshot();
+      pCtx.clearRect(0, 0, SIZE, SIZE);
+
+      if (type === 'half') {
+        pCtx.fillStyle = '#F2A6B8';
+        pCtx.fillRect(0, 0, SIZE, SIZE);
+        pCtx.fillStyle = '#89BBE0';
+        pCtx.beginPath();
+        pCtx.moveTo(0, SIZE * 0.55);
+        pCtx.lineTo(SIZE, SIZE * 0.42);
+        pCtx.lineTo(SIZE, SIZE);
+        pCtx.lineTo(0, SIZE);
+        pCtx.closePath();
+        pCtx.fill();
+      } else if (type === 'gradient') {
+        const g = pCtx.createLinearGradient(90, 90, SIZE - 90, SIZE - 90);
+        g.addColorStop(0, '#F2A6B8');
+        g.addColorStop(0.5, '#FFFDF9');
+        g.addColorStop(1, '#89BBE0');
+        pCtx.fillStyle = g;
+        pCtx.fillRect(0, 0, SIZE, SIZE);
+      } else if (type === 'dots') {
+        pCtx.fillStyle = '#89BBE0';
+        pCtx.fillRect(0, 0, SIZE, SIZE);
+        const pts = [
+          [160,150,18,'#FFFDF9'], [250,135,12,'#F2A6B8'], [345,150,20,'#FFFDF9'],
+          [145,245,14,'#F2A6B8'], [235,230,22,'#FFFDF9'], [335,245,15,'#F3C969'],
+          [155,345,21,'#FFFDF9'], [255,330,14,'#F2A6B8'], [355,345,19,'#FFFDF9'],
+          [195,425,16,'#F3C969'], [300,425,20,'#F2A6B8'], [405,295,14,'#FFFDF9']
+        ];
+        pts.forEach(([x, y, r, c]) => {
+          pCtx.fillStyle = c;
+          pCtx.beginPath();
+          pCtx.arc(x, y, r, 0, Math.PI * 2);
+          pCtx.fill();
+        });
+      } else if (type === 'stripes') {
+        pCtx.save();
+        pCtx.translate(CX, CY);
+        pCtx.rotate(-Math.PI / 5);
+        const cols = ['#F2A6B8', '#FFFDF9', '#89BBE0', '#FFFDF9'];
+        for (let i = -10; i <= 10; i++) {
+          pCtx.fillStyle = cols[Math.abs(i) % cols.length];
+          pCtx.fillRect(-400, i * 38, 800, 39);
+        }
+        pCtx.restore();
+      }
+
+      renderScene();
+    }
+
+    /* ==========================================================================
+       5. CONTROLES DE INTERFAZ Y REVELACIÓN FINAL
+       ========================================================================== */
+    // Apertura del reto con confeti
+    document.getElementById('startChallengeBtn').addEventListener('click', () => {
+      document.getElementById('introOverlay').classList.add('hidden');
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 70,
+          spread: 65,
+          origin: { y: 0.6 },
+          colors: ['#F2A6B8', '#89BBE0', '#F3C969', '#8ED1BD']
+        });
+      }
+    });
+
+    // Alternar letra G / Y
+    document.querySelectorAll('.switch-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.switch-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        state.letter = tab.dataset.letter;
+        document.getElementById('canvasHint').textContent =
+          state.letter === 'G' ? 'Desliza tu dedo sobre la G para pintar' : 'Ahora prueba pintar la Y';
+        renderScene();
+      });
+    });
+
+    // Selección de color rápido
+    document.querySelectorAll('.color-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        state.color = dot.dataset.color;
+        if (state.tool === 'eraser') {
+          document.querySelector('.tool-btn[data-tool="brush"]').click();
+        }
+      });
+    });
+
+    // Color libre
+    document.getElementById('customColorPicker').addEventListener('input', (e) => {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      state.color = e.target.value;
+      if (state.tool === 'eraser') {
+        document.querySelector('.tool-btn[data-tool="brush"]').click();
+      }
+    });
+
+    // Selección de herramienta
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.tool = btn.dataset.tool;
+      });
+    });
+
+    // Selección de tamaño de pincel
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.brushSize = Number(btn.dataset.size);
+      });
+    });
+
+    // Toggle barra de ideas rápidas
+    document.getElementById('toggleIdeasBtn').addEventListener('click', () => {
+      document.getElementById('ideasBar').classList.toggle('open');
+    });
+
+    document.querySelectorAll('.idea-chip').forEach(chip => {
+      chip.addEventListener('click', () => applyQuickIdea(chip.dataset.preset));
+    });
+
+    // Deshacer
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      if (state.history.length > 0) {
+        const prev = state.history.pop();
+        pCtx.putImageData(prev, 0, 0);
+        renderScene();
+      }
+    });
+
+    // Limpiar madera
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      saveSnapshot();
+      pCtx.clearRect(0, 0, SIZE, SIZE);
+      renderScene();
+    });
+
+    // "¡Listo, así quedó!" -> Gran Revelación Final
+    const revealModal = document.getElementById('reveal-modal');
+    document.getElementById('finishBtn').addEventListener('click', () => {
+      const dataUrl = canvas.toDataURL('image/png');
+      document.getElementById('finalArtPreview').src = dataUrl;
+      revealModal.classList.add('open');
+
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 110,
+          spread: 80,
+          origin: { y: 0.55 },
+          colors: ['#F2A6B8', '#89BBE0', '#F3C969', '#8ED1BD', '#EE8572']
+        });
+      }
+    });
+
+    // Volver a retocar
+    document.getElementById('retouchBtn').addEventListener('click', () => {
+      revealModal.classList.remove('open');
+    });
+
+    // Descargar recuerdo PNG
+    document.getElementById('downloadArtBtn').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = `Inicial_${state.letter}_Gaby_y_Yasser.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      const toast = document.getElementById('toastMsg');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
+    });
+
+    // Inicializar textura de madera y renderizar al cargar fuentes
+    buildWoodTexture();
+    renderScene();
+    document.fonts.ready.then(() => renderScene());
+  </script>
+</body>
+</html>
