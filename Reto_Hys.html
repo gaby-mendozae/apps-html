@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reto: Hardware o Software</title>
+<style>
+:root{--navy:#172b50;--blue:#2864dc;--pale:#edf3ff;--green:#16865c;--red:#c94c58;--muted:#748098}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 10%,#e2edff,transparent 35%),#f4f7fc;color:var(--navy);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;padding:20px}
+.app{width:min(760px,100%);background:#fff;border:1px solid #e3eaf4;border-radius:28px;box-shadow:0 22px 65px #20385d18;overflow:hidden}
+header{padding:22px 28px;background:linear-gradient(115deg,#172b50,#2864dc);color:white;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:12px;letter-spacing:1.7px;font-weight:900;color:#cfe1ff}.counter{font-size:13px;background:#ffffff20;padding:8px 12px;border-radius:30px;font-weight:800}
+main{padding:clamp(22px,5vw,46px)}.eyebrow{color:var(--blue);font-size:11px;letter-spacing:2px;font-weight:900}.progress{height:7px;background:#edf1f7;border-radius:20px;margin:12px 0 35px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#2864dc,#48b6cf);transition:width .3s}
+.number{text-align:center;color:#9aa5b8;font-size:12px;font-weight:900;letter-spacing:2px}.visual{width:105px;height:105px;border-radius:28px;background:var(--pale);display:grid;place-items:center;font-size:53px;margin:20px auto}.question{text-align:center;font-size:clamp(27px,5vw,38px);margin:0 0 10px;font-weight:900}.description{text-align:center;color:var(--muted);font-size:15px;line-height:1.5;max-width:480px;margin:0 auto 30px;min-height:44px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}.choice{padding:19px 12px;border:2px solid #e4eaf3;background:#fff;border-radius:17px;color:var(--navy);font-weight:900;font-size:17px;transition:.15s}.choice:hover:not(:disabled){border-color:#8eaff4;background:#f7f9ff;transform:translateY(-2px)}.choice span{display:block;font-size:25px;margin-bottom:6px}.choice:disabled{cursor:default;opacity:.7}.choice.good{background:#e9f8f0;border-color:var(--green);color:#126a49;opacity:1}.choice.bad{background:#fff0f1;border-color:var(--red);color:#a93642;opacity:1}
+.feedback{margin-top:18px;min-height:52px;text-align:center;font-size:14px;line-height:1.5;font-weight:700}.feedback.good{color:var(--green)}.feedback.bad{color:var(--red)}
+.next{display:block;margin:18px auto 0;background:var(--blue);color:#fff;border:0;border-radius:13px;padding:14px 30px;font-weight:900;font-size:15px;min-width:190px;box-shadow:0 8px 18px #2864dc30}.next:disabled{opacity:.35;cursor:not-allowed}.foot{padding:15px 25px;background:#f8faff;border-top:1px solid #edf1f7;display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px}.foot strong{color:var(--navy)}
+.result{display:none;text-align:center;padding:12px 0 5px}.result .trophy{font-size:65px}.result h2{font-size:32px;margin:8px 0}.score{font-size:52px;font-weight:950;color:var(--blue);margin:12px}.breakdown{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}.pill{border-radius:13px;padding:12px 18px;font-weight:900}.pill.green{background:#e9f8f0;color:var(--green)}.pill.red{background:#fff0f1;color:var(--red)}.pill.gray{background:#f0f3f8;color:#59677f}.again{background:#172b50}
+@media(max-width:520px){body{padding:10px}.app{border-radius:20px}header{padding:17px 19px}main{padding:23px 18px}.choices{gap:9px}.choice{font-size:15px;padding:16px 8px}.foot{padding:13px 16px}}
+@media print{body{background:white}.app{box-shadow:none}}
+</style></head>
+<body><div class="app">
+<header><div><div class="brand">LABORATORIO DIGITAL</div><div style="font-weight:850;font-size:17px;margin-top:3px">Reto de clasificación</div></div><div class="counter" id="counter">1 / 12</div></header>
+<main>
+<div id="game">
+<div class="eyebrow">¿QUÉ TIPO DE ELEMENTO ES?</div><div class="progress"><div class="bar" id="bar"></div></div>
+<div class="number" id="number">ELEMENTO 01</div><div class="visual" id="visual">⌨️</div>
+<h1 class="question" id="question">Teclado</h1><p class="description" id="description">Permite escribir letras, números y comandos en la computadora.</p>
+<div class="choices"><button class="choice" id="hardware" onclick="choose('H')"><span>🧩</span>HARDWARE</button><button class="choice" id="software" onclick="choose('S')"><span>💿</span>SOFTWARE</button></div>
+<div class="feedback" id="feedback" aria-live="polite">Seleccionen una respuesta entre todos.</div>
+<button class="next" id="next" onclick="advance()" disabled>Siguiente elemento →</button>
+</div>
+<div class="result" id="result"><div class="trophy" id="trophy">🏆</div><div class="eyebrow">RESULTADO DEL GRUPO</div><h2>¡Actividad terminada!</h2><div class="score" id="score">10/12</div><p style="color:var(--muted)">Este es el resultado de sus 12 respuestas.</p><div class="breakdown"><div class="pill green" id="right">✓ 10 correctas</div><div class="pill red" id="wrong">✕ 2 incorrectas</div><div class="pill gray" id="percent">83% de aciertos</div></div><p id="message" style="line-height:1.6;color:#64718a"></p><button class="next again" onclick="restart()">↻ Volver a jugar</button></div>
+</main>
+<div class="foot"><span>Respuestas correctas: <strong id="liveRight">0</strong></span><span>Respuestas incorrectas: <strong id="liveWrong">0</strong></span></div>
+</div>
+<script>
+const items=[
+{icon:"⌨️",name:"Teclado",desc:"Permite escribir letras, números y comandos en la computadora.",a:"H",why:"El teclado es hardware porque es un dispositivo físico que podemos tocar."},
+{icon:"🪟",name:"Windows 11",desc:"Sistema operativo que administra la computadora y permite utilizar aplicaciones.",a:"S",why:"Windows 11 es software porque es un conjunto de programas e instrucciones."},
+{icon:"🧠",name:"Memoria RAM",desc:"Almacena temporalmente los datos que la computadora está utilizando.",a:"H",why:"La memoria RAM es hardware: es un componente físico instalado en el equipo."},
+{icon:"📝",name:"Microsoft Word",desc:"Programa que permite crear, editar y guardar documentos de texto.",a:"S",why:"Word es software porque es una aplicación que ejecuta instrucciones."},
+{icon:"💽",name:"Disco duro",desc:"Dispositivo donde se almacenan archivos, documentos y programas.",a:"H",why:"El disco duro es hardware porque es un dispositivo físico de almacenamiento."},
+{icon:"🌐",name:"Google Chrome",desc:"Navegador que permite visitar páginas y utilizar servicios de internet.",a:"S",why:"Chrome es software: es una aplicación instalada o ejecutada en el dispositivo."},
+{icon:"🖱️",name:"Mouse",desc:"Dispositivo que permite mover el puntero, seleccionar y hacer clic.",a:"H",why:"El mouse es hardware porque es un periférico físico de entrada."},
+{icon:"🛡️",name:"Antivirus",desc:"Programa que analiza archivos y ayuda a detectar amenazas informáticas.",a:"S",why:"Un antivirus es software porque funciona mediante programas e instrucciones."},
+{icon:"🖨️",name:"Impresora",desc:"Equipo que permite obtener documentos e imágenes impresos en papel.",a:"H",why:"La impresora es hardware porque es un dispositivo físico de salida."},
+{icon:"📊",name:"PowerPoint",desc:"Aplicación para crear presentaciones con diapositivas, imágenes y texto.",a:"S",why:"PowerPoint es software porque es un programa de presentación."},
+{icon:"⚙️",name:"Procesador (CPU)",desc:"Componente que interpreta instrucciones y realiza operaciones de la computadora.",a:"H",why:"El procesador es hardware: es un chip físico que se encuentra dentro del equipo."},
+{icon:"🎮",name:"Un videojuego",desc:"Programa interactivo que permite jugar siguiendo reglas e instrucciones digitales.",a:"S",why:"El videojuego es software. La consola, computadora o control son hardware."}
+];
+let index=0,right=0,wrong=0,locked=false;
+const $=id=>document.getElementById(id);
+function render(){let x=items[index];locked=false;$("counter").textContent=`${index+1} / ${items.length}`;$("number").textContent=`ELEMENTO ${String(index+1).padStart(2,"0")}`;$("visual").textContent=x.icon;$("question").textContent=x.name;$("description").textContent=x.desc;$("bar").style.width=(index/items.length*100)+"%";$("feedback").textContent="Seleccionen una respuesta entre todos.";$("feedback").className="feedback";$("next").disabled=true;$("next").textContent=index===items.length-1?"Ver resultado final →":"Siguiente elemento →";["hardware","software"].forEach(id=>{$(id).disabled=false;$(id).className="choice"})}
+function choose(a){if(locked)return;locked=true;let x=items[index],ok=a===x.a;if(ok)right++;else wrong++;let chosen=a==="H"?"hardware":"software",other=a==="H"?"software":"hardware";$(chosen).classList.add(ok?"good":"bad");$(other).disabled=true;$(chosen).disabled=true;$("feedback").textContent=(ok?"✓ ¡Correcto! ":"✕ ¡No es correcto! ")+x.why;$("feedback").className="feedback "+(ok?"good":"bad");$("next").disabled=false;$("liveRight").textContent=right;$("liveWrong").textContent=wrong}
+function advance(){if(!locked)return;if(index<items.length-1){index++;render()}else showResult()}
+function showResult(){ $("game").style.display="none";$("result").style.display="block";$("bar").style.width="100%";let pct=Math.round(right/items.length*100);$("score").textContent=`${right}/${items.length}`;$("right").textContent=`✓ ${right} correctas`;$("wrong").textContent=`✕ ${wrong} incorrectas`;$("percent").textContent=`${pct}% de aciertos`;$("trophy").textContent=pct>=90?"🏆":pct>=70?"🌟":"🧠";$("message").textContent=pct>=90?"¡Excelente trabajo en equipo! Tienen muy clara la diferencia entre hardware y software.":pct>=70?"¡Buen trabajo! Repasen los elementos que causaron dudas y vuelvan a intentarlo.":"¡A seguir practicando! Recuerden: hardware son las partes físicas; software son los programas e instrucciones."}
+function restart(){index=0;right=0;wrong=0;$("liveRight").textContent="0";$("liveWrong").textContent="0";$("result").style.display="none";$("game").style.display="block";render()}
+render();
+</script></body></html>
